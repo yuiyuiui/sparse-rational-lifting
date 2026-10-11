@@ -12,6 +12,43 @@ Theorem 2.3 and Section 3, and the
 This is an implementation and rational-input specialization, with no claim of
 algorithmic priority or upstream acceptance.
 
+## Results at a glance
+
+The four fixed sparse families at `n=4,8,16,32`, `c=2` illustrate accuracy
+and the lifting mechanism. Each solution was checked against independent
+exact rational Gaussian elimination. The figures show finite cases; their
+connecting lines do not establish an asymptotic convergence rate.
+
+![Relative solution errors for four sparse rational matrix families, compared with the required n^-2/10 bound](numerical_case/figures/accuracy.svg)
+
+**Accuracy.** All 16 cases satisfy the required relative Euclidean error bound
+`n⁻² / 10`, including the diagonal case with condition number exactly `n²`.
+The plotted error uses the exact reference; acceptance uses an exact
+squared-norm inequality rather than a floating-point tolerance.
+
+![Integer residual width remains below 90 bits while stored digits reach 9312 bits per coordinate](numerical_case/figures/lifting_width.svg)
+
+**Short integers inside the lifting loop.** For the conditioning-boundary case
+at `n=32`, all 194 lifts retain integer residuals within the 90-bit bound,
+while the stored digit capacity reaches 9,312 bits per coordinate. This
+residual is an encoded lifting state, not a forward-error estimate. Stored
+digit capacity is not the size of the final rational numerator. Every callback
+state and digit was checked against a separately computed exact recurrence;
+the final residual point follows from that recurrence.
+
+![Lifting-loop scalar product counts for diagonal, bidiagonal and tridiagonal storage, with a hypothetical dense-entry loop reference](numerical_case/figures/sparse_work.svg)
+
+**Work follows sparsity.** In these cases the loop performs exactly `Lm`
+scalar products, with `L=6n+2` lifts and `m` stored nonzeros. At `n=32`, the
+diagonal, bidiagonal and tridiagonal counts are 6,208, 12,222 and 18,236.
+The dashed `Ln²` curve is a hypothetical dense-entry loop count; it is not
+a measured dense-solver comparison or the solver's total bit cost.
+
+The [full figure gallery and reproduction commands](numerical_case/README.md#result-figures)
+also include [recorded timing medians and ranges](numerical_case/figures/timing.svg)
+from three warm repeats on the recorded machine. Plotting scripts and the
+small validated source data are public.
+
 ## Input and output
 
 For every fixed positive integer `c`, the promised input is a nonsingular

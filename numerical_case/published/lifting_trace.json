@@ -1,0 +1,1015 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-11T18:24:08.896658+00:00",
+  "case": {
+    "family": "conditioning_boundary",
+    "n": 32,
+    "c": 2,
+    "nnz": 32
+  },
+  "radix_bits": 48,
+  "lifts": 194,
+  "residual_bit_bound": 90,
+  "relative_l2_error": 1.4064665152626545e-11,
+  "environment": {
+    "python": "3.13.3",
+    "system": "Darwin",
+    "machine": "arm64",
+    "python_flint": "0.8.0"
+  },
+  "source_sha256": {
+    "src/aim044_lift/solver.py": "2a98fa981bb904bcc516ea5cb8c4864682559903d67f827740207f1695b40694",
+    "src/aim044_lift/__init__.py": "19b4eff855f4745a7a59cf06f7f7c62f7e4940f5ae7049be2d156e8bfb64670b",
+    "src/aim044_lift/reconstruct.py": "df03ff495045a3624e163d6d5ce1d8d41591b5bbcf16ef24d2e99ba63b3216d8",
+    "src/aim044_lift/__main__.py": "4f63b45c58e122ec9a43c46aae110b22f74dee95f12eba0b52917d5c61ded165",
+    "test/test_solver.py": "fdd3c50e3233655e33bee74846680713858f3ba382a130a57c81939a04b91e61",
+    "numerical_case/benchmark.py": "8e158acc69a0d4adade9500af5d019bdebaf6c0876130821fa81d3587ff97d6e",
+    "numerical_case/trace_case.py": "905ae196d9489217fde05033730354106aec92089d3ac11f8061db31aa4536ff"
+  },
+  "benchmark_sha256": "e0d7b41518a1e3980c3b5ac76fa1869b51e3f0906a06be23ffce0cf7caf74b76",
+  "validation": {
+    "all_callback_states_and_digits_match_independent_recurrence": true,
+    "exact_stronger_error_inequality": true,
+    "all_integer_residual_widths_within_bound": true,
+    "summary_matches_solver": true,
+    "matches_published_case": true
+  },
+  "interpretation": "Encoded integer lifting residual, not physical forward error. Stored digit capacity is k*s bits per coordinate, not the final rational numerator size. The last residual is derived from the checked last callback by the exact recurrence. Tracing and Gaussian validation are outside solver timings.",
+  "trace": [
+    {
+      "completed_lifts": 0,
+      "integer_residual_bits": 42,
+      "stored_digit_capacity_bits_per_coordinate": 0
+    },
+    {
+      "completed_lifts": 1,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 48
+    },
+    {
+      "completed_lifts": 2,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 96
+    },
+    {
+      "completed_lifts": 3,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 144
+    },
+    {
+      "completed_lifts": 4,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 192
+    },
+    {
+      "completed_lifts": 5,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 240
+    },
+    {
+      "completed_lifts": 6,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 288
+    },
+    {
+      "completed_lifts": 7,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 336
+    },
+    {
+      "completed_lifts": 8,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 384
+    },
+    {
+      "completed_lifts": 9,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 432
+    },
+    {
+      "completed_lifts": 10,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 480
+    },
+    {
+      "completed_lifts": 11,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 528
+    },
+    {
+      "completed_lifts": 12,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 576
+    },
+    {
+      "completed_lifts": 13,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 624
+    },
+    {
+      "completed_lifts": 14,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 672
+    },
+    {
+      "completed_lifts": 15,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 720
+    },
+    {
+      "completed_lifts": 16,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 768
+    },
+    {
+      "completed_lifts": 17,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 816
+    },
+    {
+      "completed_lifts": 18,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 864
+    },
+    {
+      "completed_lifts": 19,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 912
+    },
+    {
+      "completed_lifts": 20,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 960
+    },
+    {
+      "completed_lifts": 21,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1008
+    },
+    {
+      "completed_lifts": 22,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1056
+    },
+    {
+      "completed_lifts": 23,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1104
+    },
+    {
+      "completed_lifts": 24,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1152
+    },
+    {
+      "completed_lifts": 25,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1200
+    },
+    {
+      "completed_lifts": 26,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1248
+    },
+    {
+      "completed_lifts": 27,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1296
+    },
+    {
+      "completed_lifts": 28,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1344
+    },
+    {
+      "completed_lifts": 29,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1392
+    },
+    {
+      "completed_lifts": 30,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1440
+    },
+    {
+      "completed_lifts": 31,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1488
+    },
+    {
+      "completed_lifts": 32,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1536
+    },
+    {
+      "completed_lifts": 33,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1584
+    },
+    {
+      "completed_lifts": 34,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1632
+    },
+    {
+      "completed_lifts": 35,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1680
+    },
+    {
+      "completed_lifts": 36,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1728
+    },
+    {
+      "completed_lifts": 37,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1776
+    },
+    {
+      "completed_lifts": 38,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1824
+    },
+    {
+      "completed_lifts": 39,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1872
+    },
+    {
+      "completed_lifts": 40,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1920
+    },
+    {
+      "completed_lifts": 41,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 1968
+    },
+    {
+      "completed_lifts": 42,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2016
+    },
+    {
+      "completed_lifts": 43,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2064
+    },
+    {
+      "completed_lifts": 44,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2112
+    },
+    {
+      "completed_lifts": 45,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2160
+    },
+    {
+      "completed_lifts": 46,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2208
+    },
+    {
+      "completed_lifts": 47,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2256
+    },
+    {
+      "completed_lifts": 48,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2304
+    },
+    {
+      "completed_lifts": 49,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2352
+    },
+    {
+      "completed_lifts": 50,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2400
+    },
+    {
+      "completed_lifts": 51,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2448
+    },
+    {
+      "completed_lifts": 52,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2496
+    },
+    {
+      "completed_lifts": 53,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2544
+    },
+    {
+      "completed_lifts": 54,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2592
+    },
+    {
+      "completed_lifts": 55,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2640
+    },
+    {
+      "completed_lifts": 56,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2688
+    },
+    {
+      "completed_lifts": 57,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2736
+    },
+    {
+      "completed_lifts": 58,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2784
+    },
+    {
+      "completed_lifts": 59,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2832
+    },
+    {
+      "completed_lifts": 60,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2880
+    },
+    {
+      "completed_lifts": 61,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2928
+    },
+    {
+      "completed_lifts": 62,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 2976
+    },
+    {
+      "completed_lifts": 63,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3024
+    },
+    {
+      "completed_lifts": 64,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3072
+    },
+    {
+      "completed_lifts": 65,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3120
+    },
+    {
+      "completed_lifts": 66,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3168
+    },
+    {
+      "completed_lifts": 67,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3216
+    },
+    {
+      "completed_lifts": 68,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3264
+    },
+    {
+      "completed_lifts": 69,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3312
+    },
+    {
+      "completed_lifts": 70,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3360
+    },
+    {
+      "completed_lifts": 71,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3408
+    },
+    {
+      "completed_lifts": 72,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3456
+    },
+    {
+      "completed_lifts": 73,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3504
+    },
+    {
+      "completed_lifts": 74,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3552
+    },
+    {
+      "completed_lifts": 75,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3600
+    },
+    {
+      "completed_lifts": 76,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3648
+    },
+    {
+      "completed_lifts": 77,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3696
+    },
+    {
+      "completed_lifts": 78,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3744
+    },
+    {
+      "completed_lifts": 79,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3792
+    },
+    {
+      "completed_lifts": 80,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3840
+    },
+    {
+      "completed_lifts": 81,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3888
+    },
+    {
+      "completed_lifts": 82,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3936
+    },
+    {
+      "completed_lifts": 83,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 3984
+    },
+    {
+      "completed_lifts": 84,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4032
+    },
+    {
+      "completed_lifts": 85,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4080
+    },
+    {
+      "completed_lifts": 86,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4128
+    },
+    {
+      "completed_lifts": 87,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4176
+    },
+    {
+      "completed_lifts": 88,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4224
+    },
+    {
+      "completed_lifts": 89,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4272
+    },
+    {
+      "completed_lifts": 90,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4320
+    },
+    {
+      "completed_lifts": 91,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4368
+    },
+    {
+      "completed_lifts": 92,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4416
+    },
+    {
+      "completed_lifts": 93,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4464
+    },
+    {
+      "completed_lifts": 94,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4512
+    },
+    {
+      "completed_lifts": 95,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4560
+    },
+    {
+      "completed_lifts": 96,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4608
+    },
+    {
+      "completed_lifts": 97,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4656
+    },
+    {
+      "completed_lifts": 98,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4704
+    },
+    {
+      "completed_lifts": 99,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4752
+    },
+    {
+      "completed_lifts": 100,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4800
+    },
+    {
+      "completed_lifts": 101,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4848
+    },
+    {
+      "completed_lifts": 102,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4896
+    },
+    {
+      "completed_lifts": 103,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4944
+    },
+    {
+      "completed_lifts": 104,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 4992
+    },
+    {
+      "completed_lifts": 105,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5040
+    },
+    {
+      "completed_lifts": 106,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5088
+    },
+    {
+      "completed_lifts": 107,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5136
+    },
+    {
+      "completed_lifts": 108,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5184
+    },
+    {
+      "completed_lifts": 109,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5232
+    },
+    {
+      "completed_lifts": 110,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5280
+    },
+    {
+      "completed_lifts": 111,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5328
+    },
+    {
+      "completed_lifts": 112,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5376
+    },
+    {
+      "completed_lifts": 113,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5424
+    },
+    {
+      "completed_lifts": 114,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5472
+    },
+    {
+      "completed_lifts": 115,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5520
+    },
+    {
+      "completed_lifts": 116,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5568
+    },
+    {
+      "completed_lifts": 117,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5616
+    },
+    {
+      "completed_lifts": 118,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5664
+    },
+    {
+      "completed_lifts": 119,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5712
+    },
+    {
+      "completed_lifts": 120,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5760
+    },
+    {
+      "completed_lifts": 121,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5808
+    },
+    {
+      "completed_lifts": 122,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5856
+    },
+    {
+      "completed_lifts": 123,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5904
+    },
+    {
+      "completed_lifts": 124,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 5952
+    },
+    {
+      "completed_lifts": 125,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6000
+    },
+    {
+      "completed_lifts": 126,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6048
+    },
+    {
+      "completed_lifts": 127,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6096
+    },
+    {
+      "completed_lifts": 128,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6144
+    },
+    {
+      "completed_lifts": 129,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6192
+    },
+    {
+      "completed_lifts": 130,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6240
+    },
+    {
+      "completed_lifts": 131,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6288
+    },
+    {
+      "completed_lifts": 132,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6336
+    },
+    {
+      "completed_lifts": 133,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6384
+    },
+    {
+      "completed_lifts": 134,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6432
+    },
+    {
+      "completed_lifts": 135,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6480
+    },
+    {
+      "completed_lifts": 136,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6528
+    },
+    {
+      "completed_lifts": 137,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6576
+    },
+    {
+      "completed_lifts": 138,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6624
+    },
+    {
+      "completed_lifts": 139,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6672
+    },
+    {
+      "completed_lifts": 140,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6720
+    },
+    {
+      "completed_lifts": 141,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6768
+    },
+    {
+      "completed_lifts": 142,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6816
+    },
+    {
+      "completed_lifts": 143,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6864
+    },
+    {
+      "completed_lifts": 144,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6912
+    },
+    {
+      "completed_lifts": 145,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 6960
+    },
+    {
+      "completed_lifts": 146,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7008
+    },
+    {
+      "completed_lifts": 147,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7056
+    },
+    {
+      "completed_lifts": 148,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7104
+    },
+    {
+      "completed_lifts": 149,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7152
+    },
+    {
+      "completed_lifts": 150,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7200
+    },
+    {
+      "completed_lifts": 151,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7248
+    },
+    {
+      "completed_lifts": 152,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7296
+    },
+    {
+      "completed_lifts": 153,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7344
+    },
+    {
+      "completed_lifts": 154,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7392
+    },
+    {
+      "completed_lifts": 155,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7440
+    },
+    {
+      "completed_lifts": 156,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7488
+    },
+    {
+      "completed_lifts": 157,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7536
+    },
+    {
+      "completed_lifts": 158,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7584
+    },
+    {
+      "completed_lifts": 159,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7632
+    },
+    {
+      "completed_lifts": 160,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7680
+    },
+    {
+      "completed_lifts": 161,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7728
+    },
+    {
+      "completed_lifts": 162,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7776
+    },
+    {
+      "completed_lifts": 163,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7824
+    },
+    {
+      "completed_lifts": 164,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7872
+    },
+    {
+      "completed_lifts": 165,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7920
+    },
+    {
+      "completed_lifts": 166,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 7968
+    },
+    {
+      "completed_lifts": 167,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8016
+    },
+    {
+      "completed_lifts": 168,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8064
+    },
+    {
+      "completed_lifts": 169,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8112
+    },
+    {
+      "completed_lifts": 170,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8160
+    },
+    {
+      "completed_lifts": 171,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8208
+    },
+    {
+      "completed_lifts": 172,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8256
+    },
+    {
+      "completed_lifts": 173,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8304
+    },
+    {
+      "completed_lifts": 174,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8352
+    },
+    {
+      "completed_lifts": 175,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8400
+    },
+    {
+      "completed_lifts": 176,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8448
+    },
+    {
+      "completed_lifts": 177,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8496
+    },
+    {
+      "completed_lifts": 178,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8544
+    },
+    {
+      "completed_lifts": 179,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8592
+    },
+    {
+      "completed_lifts": 180,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8640
+    },
+    {
+      "completed_lifts": 181,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8688
+    },
+    {
+      "completed_lifts": 182,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8736
+    },
+    {
+      "completed_lifts": 183,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8784
+    },
+    {
+      "completed_lifts": 184,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8832
+    },
+    {
+      "completed_lifts": 185,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8880
+    },
+    {
+      "completed_lifts": 186,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8928
+    },
+    {
+      "completed_lifts": 187,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 8976
+    },
+    {
+      "completed_lifts": 188,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 9024
+    },
+    {
+      "completed_lifts": 189,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 9072
+    },
+    {
+      "completed_lifts": 190,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 9120
+    },
+    {
+      "completed_lifts": 191,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 9168
+    },
+    {
+      "completed_lifts": 192,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 9216
+    },
+    {
+      "completed_lifts": 193,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 9264
+    },
+    {
+      "completed_lifts": 194,
+      "integer_residual_bits": 89,
+      "stored_digit_capacity_bits_per_coordinate": 9312
+    }
+  ]
+}

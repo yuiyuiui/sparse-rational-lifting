@@ -26,3 +26,62 @@ reference construction and validation. These finite cases validate software;
 they do not prove the all-input theorem or its asymptotic bit complexity.
 Raw output is ignored; the small selected report in `published/` records the
 delivered version. No large simulation arrays are required by this method.
+
+## Result figures
+
+The gallery is generated from the selected 16-case report and one independently
+checked trace of the existing conditioning-boundary case at `n=32`, `c=2`.
+The trace checks each callback state/digit against the exact integer recurrence,
+then validates the final solution against independent exact Gaussian
+elimination and the recorded case. Its 195 points include the initial state
+and a final residual derived from the last callback. It is diagnostic work,
+outside the timed solver core.
+
+| Figure | What it shows | Interpretation limit |
+| --- | --- | --- |
+| [Solution accuracy](figures/accuracy.svg) | Relative Euclidean error versus dimension, with the required `n⁻²/10` bound | Four sampled dimensions; connecting lines do not prove a rate |
+| [Lifting widths](figures/lifting_width.svg) | Encoded residual width versus completed lifts, alongside accumulated digit capacity | Residual width is not forward error; capacity is not final numerator size |
+| [Sparse work](figures/sparse_work.svg) | Actual scalar product counts for diagonal/bidiagonal/tridiagonal storage | Dense-entry curve is an operation-count reference, not a timed solver comparison or total bit cost |
+| [Recorded timings](figures/timing.svg) | Median and observed min–max of three warm repeats for each case | Small cases on macOS arm64/Python 3.13.3/python-flint 0.8.0; ranges are not confidence intervals or evidence of general speedup |
+
+The root README selects accuracy, lifting widths and sparse work to explain
+the method's main features. These figures visualize validated finite data;
+they do not certify the all-input theorem or asymptotic complexity.
+
+### Reproduce the figures
+
+Install the optional plotting dependency in your own environment. It is not
+required to use the solver. Plotting reads selected data and does not rerun
+the timing experiment:
+
+```sh
+.venv/bin/python -m pip install -r numerical_case/requirements-plot.txt
+MPLCONFIGDIR=numerical_case/raw/mpl-config .venv/bin/python \
+  numerical_case/plot_results.py --output numerical_case/raw/figures-reproduction --preview
+```
+
+Use a fresh output directory. SVGs are the primary repository figures;
+`--preview` also creates PNGs for visual inspection. The generated
+`FIGURE_MANIFEST.json` records data/script hashes, renderer versions,
+validation checks and SVG hashes. With the recorded renderer environment,
+SVG output is deterministic: no generation date or random SVG identifiers
+are embedded. Layout can vary with other renderer versions.
+
+To independently regenerate the selected trace, without rerunning the timing
+cases, use another fresh directory:
+
+```sh
+PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+  .venv/bin/python numerical_case/trace_case.py --output numerical_case/raw/trace-reproduction
+MPLCONFIGDIR=numerical_case/raw/mpl-config .venv/bin/python \
+  numerical_case/plot_results.py \
+  --trace numerical_case/raw/trace-reproduction/lifting_trace.json \
+  --output numerical_case/raw/figures-new-trace --preview
+```
+
+Both scripts reject changed solver/reference source hashes or failed
+validation flags. The trace collector has a 60-second cap and runs one
+fixed case. Selected inputs are `published/results.json` and
+`published/lifting_trace.json`; the original timing data remain unchanged.
+The figure manifest belongs with `figures/`. Raw reproduction and preview
+outputs stay in the ignored `raw/` directory.

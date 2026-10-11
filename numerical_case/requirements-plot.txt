@@ -1,0 +1,2 @@
+# Optional figure reproduction; not required by the solver.
+matplotlib==3.11.2
