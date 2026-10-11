@@ -1,4 +1,4 @@
-# AIM 044 sparse rational lifting
+# Sparse rational lifting
 
 A Python implementation of the rational-input specialization of Jonathan A.
 Kelner's identity-modulus sparse linear solver. The algorithmic mechanism and

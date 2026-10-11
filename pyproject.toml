@@ -3,7 +3,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "aim044-lift"
+name = "sparse-rational-lifting"
 version = "0.1.0"
 description = "Sparse rational-input specialization of Kelner's identity-modulus lifting solver"
 requires-python = ">=3.11"
