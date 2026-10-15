@@ -1,0 +1,2505 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-10-15T09:59:03.405531+00:00",
+  "completed_at": "2026-10-15T09:59:05.718440+00:00",
+  "environment": {
+    "python": "3.13.3",
+    "system": "Darwin",
+    "machine": "arm64",
+    "package": "0.2.0",
+    "python_flint": "0.8.0",
+    "flint": "3.3.1",
+    "logical_cpus": 14,
+    "native_threads": 1,
+    "openblas_threads": "1",
+    "omp_threads": "1"
+  },
+  "source_base_commit": "6c372b68a56923f1b4c630adb874144377c890e4",
+  "source_sha256": {
+    "src/aim044_lift/__init__.py": "b823d7b2b5cd886614c85cdd1fc418d0b5560b267b1238c72de4d0f5eae3c294",
+    "src/aim044_lift/__main__.py": "1e779621c9ca29420961960d83f870c3b57f10686900919e8fbb0c748e3c33b4",
+    "src/aim044_lift/parameters.py": "ff7ed3a7a0ddfbf836783f8c16e507a4b4bb5868b3516bedd45c7418b8aa7a1f",
+    "src/aim044_lift/reconstruct.py": "54ea49184a8652f5dbc00aaab13a280487986fa827909fcb21fe53db93f57ee1",
+    "src/aim044_lift/solver.py": "d8e0a3fcd571b059b2f555b1319936f9276b610dbec3ba05b06b5d20ac22df62",
+    "test/test_solver.py": "fdd3c50e3233655e33bee74846680713858f3ba382a130a57c81939a04b91e61",
+    "test/test_api.py": "67653ff324dd703d32ac252c310aa94504e5f73c12b573e525b52b3b7cd5548b",
+    "numerical_case/benchmark.py": "ed7230e464821d76f6966244e69e23b68a72a06deb9161421bcb92530807f7ce",
+    "numerical_case/benchmark_policies.py": "c81b1f3a9b88ba1824dff11053dadd739eb4aec4ac14b3c51d2077dd8ee3f159"
+  },
+  "contract": {
+    "input_promise": "kappa_2(A)<=n^2, c=2 input precision; identical inputs for all modes",
+    "accuracy": "Relative Euclidean error <=n^-2/10; exact squared-fraction acceptance",
+    "timing": "Three rotated warm repeats; full solve including normalization, selection, backend check, rounding, lifting and recovery. Reference and checks excluded.",
+    "memory": "Separate tracemalloc call per policy excludes native allocations; RSS is entire-process high-water including references/instrumentation, not per-mode memory.",
+    "seeds": "None: deterministic fixed cases",
+    "timeout_seconds": 60,
+    "evidence": "NUMERICAL EVIDENCE: finite checks, no optimality/scaling or asymptotic speedup claim"
+  },
+  "whole_process_peak_rss_bytes": 40189952,
+  "cases": [
+    {
+      "family": "conditioning_boundary",
+      "n": 4,
+      "nnz": 4,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa0"
+            },
+            "observed_input_bits": 5,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=2, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 20,
+          "radix_bits": 24,
+          "lifts": 26,
+          "sparse_products": 104,
+          "digit_storage_bytes": 312,
+          "python_tracemalloc_peak_bytes": 5485,
+          "seconds": [
+            0.00013358297292143106,
+            8.224998600780964e-05,
+            7.820792961865664e-05
+          ],
+          "median_seconds": 8.224998600780964e-05,
+          "cpu_seconds": [
+            0.00013199999999999323,
+            8.199999999999874e-05,
+            7.800000000000862e-05
+          ],
+          "relative_l2_error": 2.5940558327063558e-06,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa0"
+            },
+            "observed_input_bits": 5,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 20,
+          "radix_bits": 24,
+          "lifts": 26,
+          "sparse_products": 104,
+          "digit_storage_bytes": 312,
+          "python_tracemalloc_peak_bytes": 5437,
+          "seconds": [
+            8.875003550201654e-05,
+            8.162495214492083e-05,
+            7.570802699774504e-05
+          ],
+          "median_seconds": 8.162495214492083e-05,
+          "cpu_seconds": [
+            8.800000000000474e-05,
+            8.099999999999774e-05,
+            7.499999999999174e-05
+          ],
+          "relative_l2_error": 2.5940558327063558e-06,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa0"
+            },
+            "observed_input_bits": 5,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 20,
+          "radix_bits": 24,
+          "lifts": 26,
+          "sparse_products": 104,
+          "digit_storage_bytes": 312,
+          "python_tracemalloc_peak_bytes": 4520,
+          "seconds": [
+            6.429199129343033e-05,
+            5.7124998420476913e-05,
+            5.637493450194597e-05
+          ],
+          "median_seconds": 5.7124998420476913e-05,
+          "cpu_seconds": [
+            6.399999999999462e-05,
+            5.7000000000001494e-05,
+            5.6000000000000494e-05
+          ],
+          "relative_l2_error": 2.5940558327063558e-06,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "conditioning_boundary",
+      "n": 8,
+      "nnz": 8,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x280"
+            },
+            "observed_input_bits": 7,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=2, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 27,
+          "radix_bits": 32,
+          "lifts": 50,
+          "sparse_products": 400,
+          "digit_storage_bytes": 1600,
+          "python_tracemalloc_peak_bytes": 9931,
+          "seconds": [
+            0.00024149997625499964,
+            0.00020995899103581905,
+            0.0002092089271172881
+          ],
+          "median_seconds": 0.00020995899103581905,
+          "cpu_seconds": [
+            0.00024099999999999122,
+            0.00020899999999998697,
+            0.00020900000000001473
+          ],
+          "relative_l2_error": 5.053476500492332e-08,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x280"
+            },
+            "observed_input_bits": 7,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 27,
+          "radix_bits": 32,
+          "lifts": 50,
+          "sparse_products": 400,
+          "digit_storage_bytes": 1600,
+          "python_tracemalloc_peak_bytes": 9891,
+          "seconds": [
+            0.00021354202181100845,
+            0.00021541700698435307,
+            0.00020700006280094385
+          ],
+          "median_seconds": 0.00021354202181100845,
+          "cpu_seconds": [
+            0.00021400000000001973,
+            0.00021600000000002173,
+            0.00020599999999998397
+          ],
+          "relative_l2_error": 5.053476500492332e-08,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x280"
+            },
+            "observed_input_bits": 7,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 27,
+          "radix_bits": 32,
+          "lifts": 50,
+          "sparse_products": 400,
+          "digit_storage_bytes": 1600,
+          "python_tracemalloc_peak_bytes": 9308,
+          "seconds": [
+            0.00017854198813438416,
+            0.0001781251048669219,
+            0.0001739170402288437
+          ],
+          "median_seconds": 0.0001781251048669219,
+          "cpu_seconds": [
+            0.00017799999999998373,
+            0.00017700000000001048,
+            0.00017300000000000648
+          ],
+          "relative_l2_error": 5.053476500492332e-08,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "conditioning_boundary",
+      "n": 16,
+      "nnz": 16,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa00"
+            },
+            "observed_input_bits": 9,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=2, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 34,
+          "radix_bits": 40,
+          "lifts": 98,
+          "sparse_products": 1568,
+          "digit_storage_bytes": 7840,
+          "python_tracemalloc_peak_bytes": 23543,
+          "seconds": [
+            0.0007770420052111149,
+            0.0006631249561905861,
+            0.0006415829993784428
+          ],
+          "median_seconds": 0.0006631249561905861,
+          "cpu_seconds": [
+            0.0007759999999999989,
+            0.0006619999999999959,
+            0.0006410000000000027
+          ],
+          "relative_l2_error": 8.654561016813412e-10,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa00"
+            },
+            "observed_input_bits": 9,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 34,
+          "radix_bits": 40,
+          "lifts": 98,
+          "sparse_products": 1568,
+          "digit_storage_bytes": 7840,
+          "python_tracemalloc_peak_bytes": 23503,
+          "seconds": [
+            0.0006784590659663081,
+            0.0007335830014199018,
+            0.0006929159862920642
+          ],
+          "median_seconds": 0.0006929159862920642,
+          "cpu_seconds": [
+            0.0006779999999999842,
+            0.0007169999999999954,
+            0.0006889999999999952
+          ],
+          "relative_l2_error": 8.654561016813412e-10,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa00"
+            },
+            "observed_input_bits": 9,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 34,
+          "radix_bits": 40,
+          "lifts": 98,
+          "sparse_products": 1568,
+          "digit_storage_bytes": 7840,
+          "python_tracemalloc_peak_bytes": 23636,
+          "seconds": [
+            0.0006210829596966505,
+            0.0006381660932675004,
+            0.0006007920019328594
+          ],
+          "median_seconds": 0.0006210829596966505,
+          "cpu_seconds": [
+            0.0006200000000000094,
+            0.0006379999999999997,
+            0.0005999999999999894
+          ],
+          "relative_l2_error": 8.654561016813412e-10,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "conditioning_boundary",
+      "n": 32,
+      "nnz": 32,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x2800"
+            },
+            "observed_input_bits": 11,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=2, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 41,
+          "radix_bits": 48,
+          "lifts": 194,
+          "sparse_products": 6208,
+          "digit_storage_bytes": 37248,
+          "python_tracemalloc_peak_bytes": 70791,
+          "seconds": [
+            0.0023453329922631383,
+            0.002308499999344349,
+            0.0022335000103339553
+          ],
+          "median_seconds": 0.002308499999344349,
+          "cpu_seconds": [
+            0.0023370000000000057,
+            0.0023080000000000045,
+            0.002232999999999985
+          ],
+          "relative_l2_error": 1.4064665152626545e-11,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x2800"
+            },
+            "observed_input_bits": 11,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 41,
+          "radix_bits": 48,
+          "lifts": 194,
+          "sparse_products": 6208,
+          "digit_storage_bytes": 37248,
+          "python_tracemalloc_peak_bytes": 70783,
+          "seconds": [
+            0.0022253330098465085,
+            0.002262874972075224,
+            0.002420542063191533
+          ],
+          "median_seconds": 0.002262874972075224,
+          "cpu_seconds": [
+            0.0022199999999999998,
+            0.0022619999999999862,
+            0.0023829999999999685
+          ],
+          "relative_l2_error": 1.4064665152626545e-11,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x2800"
+            },
+            "observed_input_bits": 11,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 41,
+          "radix_bits": 48,
+          "lifts": 194,
+          "sparse_products": 6208,
+          "digit_storage_bytes": 37248,
+          "python_tracemalloc_peak_bytes": 72468,
+          "seconds": [
+            0.003035707981325686,
+            0.0030059589771553874,
+            0.0029494580812752247
+          ],
+          "median_seconds": 0.0030059589771553874,
+          "cpu_seconds": [
+            0.003025,
+            0.0029949999999999977,
+            0.002948000000000006
+          ],
+          "relative_l2_error": 1.4064665152626545e-11,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "small_rational_scale",
+      "n": 4,
+      "nnz": 4,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa0"
+            },
+            "observed_input_bits": 5,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=2, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 20,
+          "radix_bits": 24,
+          "lifts": 26,
+          "sparse_products": 104,
+          "digit_storage_bytes": 312,
+          "python_tracemalloc_peak_bytes": 5413,
+          "seconds": [
+            0.00013475003652274609,
+            8.116697426885366e-05,
+            7.970805745571852e-05
+          ],
+          "median_seconds": 8.116697426885366e-05,
+          "cpu_seconds": [
+            0.00013299999999999423,
+            8.099999999999774e-05,
+            7.899999999999574e-05
+          ],
+          "relative_l2_error": 1.014807727917691e-06,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa0"
+            },
+            "observed_input_bits": 5,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 20,
+          "radix_bits": 24,
+          "lifts": 26,
+          "sparse_products": 104,
+          "digit_storage_bytes": 312,
+          "python_tracemalloc_peak_bytes": 5565,
+          "seconds": [
+            8.604198228567839e-05,
+            8.108292240649462e-05,
+            7.954204920679331e-05
+          ],
+          "median_seconds": 8.108292240649462e-05,
+          "cpu_seconds": [
+            8.599999999997499e-05,
+            8.00000000000245e-05,
+            7.899999999999574e-05
+          ],
+          "relative_l2_error": 1.014807727917691e-06,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa0"
+            },
+            "observed_input_bits": 5,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 20,
+          "radix_bits": 24,
+          "lifts": 26,
+          "sparse_products": 104,
+          "digit_storage_bytes": 312,
+          "python_tracemalloc_peak_bytes": 4536,
+          "seconds": [
+            6.958306767046452e-05,
+            6.587500683963299e-05,
+            6.487499922513962e-05
+          ],
+          "median_seconds": 6.587500683963299e-05,
+          "cpu_seconds": [
+            6.80000000000125e-05,
+            6.499999999998174e-05,
+            6.40000000000085e-05
+          ],
+          "relative_l2_error": 1.014807727917691e-06,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "small_rational_scale",
+      "n": 8,
+      "nnz": 8,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x280"
+            },
+            "observed_input_bits": 7,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=2, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 27,
+          "radix_bits": 32,
+          "lifts": 50,
+          "sparse_products": 400,
+          "digit_storage_bytes": 1600,
+          "python_tracemalloc_peak_bytes": 10003,
+          "seconds": [
+            0.0002639580052345991,
+            0.00020283390767872334,
+            0.00020045798737555742
+          ],
+          "median_seconds": 0.00020283390767872334,
+          "cpu_seconds": [
+            0.0002630000000000132,
+            0.00020300000000006424,
+            0.00019900000000006024
+          ],
+          "relative_l2_error": 4.677077233477978e-07,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x280"
+            },
+            "observed_input_bits": 7,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 27,
+          "radix_bits": 32,
+          "lifts": 50,
+          "sparse_products": 400,
+          "digit_storage_bytes": 1600,
+          "python_tracemalloc_peak_bytes": 10155,
+          "seconds": [
+            0.0002116248942911625,
+            0.00020275008864700794,
+            0.00019754201639443636
+          ],
+          "median_seconds": 0.00020275008864700794,
+          "cpu_seconds": [
+            0.00021099999999996122,
+            0.00020200000000003548,
+            0.00019700000000000273
+          ],
+          "relative_l2_error": 4.677077233477978e-07,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x280"
+            },
+            "observed_input_bits": 7,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 27,
+          "radix_bits": 32,
+          "lifts": 50,
+          "sparse_products": 400,
+          "digit_storage_bytes": 1600,
+          "python_tracemalloc_peak_bytes": 9436,
+          "seconds": [
+            0.00021566601935774088,
+            0.0002110829809680581,
+            0.0002096670214086771
+          ],
+          "median_seconds": 0.0002110829809680581,
+          "cpu_seconds": [
+            0.00021499999999996522,
+            0.00021000000000004349,
+            0.00020900000000001473
+          ],
+          "relative_l2_error": 4.677077233477978e-07,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "small_rational_scale",
+      "n": 16,
+      "nnz": 16,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa00"
+            },
+            "observed_input_bits": 9,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=2, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 34,
+          "radix_bits": 40,
+          "lifts": 98,
+          "sparse_products": 1568,
+          "digit_storage_bytes": 7840,
+          "python_tracemalloc_peak_bytes": 24035,
+          "seconds": [
+            0.0006879171123728156,
+            0.0006371670169755816,
+            0.0006147499661892653
+          ],
+          "median_seconds": 0.0006371670169755816,
+          "cpu_seconds": [
+            0.0006860000000000754,
+            0.0006359999999999699,
+            0.0006140000000000034
+          ],
+          "relative_l2_error": 7.442966144423595e-09,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa00"
+            },
+            "observed_input_bits": 9,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 34,
+          "radix_bits": 40,
+          "lifts": 98,
+          "sparse_products": 1568,
+          "digit_storage_bytes": 7840,
+          "python_tracemalloc_peak_bytes": 24187,
+          "seconds": [
+            0.0006287909345701337,
+            0.0006922500906512141,
+            0.0006270420271903276
+          ],
+          "median_seconds": 0.0006287909345701337,
+          "cpu_seconds": [
+            0.0006279999999999619,
+            0.0006909999999999972,
+            0.0006260000000000154
+          ],
+          "relative_l2_error": 7.442966144423595e-09,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa00"
+            },
+            "observed_input_bits": 9,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 34,
+          "radix_bits": 40,
+          "lifts": 98,
+          "sparse_products": 1568,
+          "digit_storage_bytes": 7840,
+          "python_tracemalloc_peak_bytes": 24192,
+          "seconds": [
+            0.0008845000993460417,
+            0.0008539169793948531,
+            0.0008528330363333225
+          ],
+          "median_seconds": 0.0008539169793948531,
+          "cpu_seconds": [
+            0.0008829999999999671,
+            0.0008529999999999927,
+            0.0008519999999999639
+          ],
+          "relative_l2_error": 7.442966144423595e-09,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "small_rational_scale",
+      "n": 32,
+      "nnz": 32,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x2800"
+            },
+            "observed_input_bits": 11,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=2, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 41,
+          "radix_bits": 48,
+          "lifts": 194,
+          "sparse_products": 6208,
+          "digit_storage_bytes": 37248,
+          "python_tracemalloc_peak_bytes": 70723,
+          "seconds": [
+            0.0023334999568760395,
+            0.0021331249736249447,
+            0.002255624975077808
+          ],
+          "median_seconds": 0.002255624975077808,
+          "cpu_seconds": [
+            0.002322999999999964,
+            0.0021320000000000228,
+            0.002246999999999999
+          ],
+          "relative_l2_error": 1.1647086063696285e-10,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x2800"
+            },
+            "observed_input_bits": 11,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 41,
+          "radix_bits": 48,
+          "lifts": 194,
+          "sparse_products": 6208,
+          "digit_storage_bytes": 37248,
+          "python_tracemalloc_peak_bytes": 70907,
+          "seconds": [
+            0.0022660410031676292,
+            0.0022563330130651593,
+            0.00219745805952698
+          ],
+          "median_seconds": 0.0022563330130651593,
+          "cpu_seconds": [
+            0.0022649999999999615,
+            0.002255000000000007,
+            0.0021970000000000045
+          ],
+          "relative_l2_error": 1.1647086063696285e-10,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x2800"
+            },
+            "observed_input_bits": 11,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 41,
+          "radix_bits": 48,
+          "lifts": 194,
+          "sparse_products": 6208,
+          "digit_storage_bytes": 37248,
+          "python_tracemalloc_peak_bytes": 72556,
+          "seconds": [
+            0.003824374987743795,
+            0.003711958066560328,
+            0.003661958035081625
+          ],
+          "median_seconds": 0.003711958066560328,
+          "cpu_seconds": [
+            0.003805999999999976,
+            0.0036960000000000326,
+            0.0036439999999999806
+          ],
+          "relative_l2_error": 1.1647086063696285e-10,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "indefinite_tridiagonal",
+      "n": 4,
+      "nnz": 10,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa0"
+            },
+            "observed_input_bits": 3,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=1, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 20,
+          "radix_bits": 24,
+          "lifts": 26,
+          "sparse_products": 260,
+          "digit_storage_bytes": 312,
+          "python_tracemalloc_peak_bytes": 6245,
+          "seconds": [
+            0.0001800829777494073,
+            0.00010841595940291882,
+            9.895802941173315e-05
+          ],
+          "median_seconds": 0.00010841595940291882,
+          "cpu_seconds": [
+            0.00017899999999992922,
+            0.00010799999999999699,
+            9.899999999996023e-05
+          ],
+          "relative_l2_error": 5.135109872644115e-07,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa0"
+            },
+            "observed_input_bits": 3,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 20,
+          "radix_bits": 24,
+          "lifts": 26,
+          "sparse_products": 260,
+          "digit_storage_bytes": 312,
+          "python_tracemalloc_peak_bytes": 6397,
+          "seconds": [
+            0.00011141691356897354,
+            0.00010375003330409527,
+            9.520805906504393e-05
+          ],
+          "median_seconds": 0.00010375003330409527,
+          "cpu_seconds": [
+            0.00011200000000000099,
+            0.00010300000000007525,
+            9.399999999992747e-05
+          ],
+          "relative_l2_error": 5.135109872644115e-07,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa0"
+            },
+            "observed_input_bits": 3,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 20,
+          "radix_bits": 24,
+          "lifts": 26,
+          "sparse_products": 260,
+          "digit_storage_bytes": 312,
+          "python_tracemalloc_peak_bytes": 5360,
+          "seconds": [
+            0.0001468330156058073,
+            0.00012624997179955244,
+            0.00013466703239828348
+          ],
+          "median_seconds": 0.00013466703239828348,
+          "cpu_seconds": [
+            0.00014100000000005775,
+            0.00012500000000004174,
+            0.00013399999999996748
+          ],
+          "relative_l2_error": 5.135109872644115e-07,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "indefinite_tridiagonal",
+      "n": 8,
+      "nnz": 22,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x280"
+            },
+            "observed_input_bits": 4,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=1, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 27,
+          "radix_bits": 32,
+          "lifts": 50,
+          "sparse_products": 1100,
+          "digit_storage_bytes": 1600,
+          "python_tracemalloc_peak_bytes": 12199,
+          "seconds": [
+            0.00033062510192394257,
+            0.000342792016454041,
+            0.00029687501955777407
+          ],
+          "median_seconds": 0.00033062510192394257,
+          "cpu_seconds": [
+            0.0003290000000000237,
+            0.00034199999999995345,
+            0.0002969999999999917
+          ],
+          "relative_l2_error": 6.062667359207788e-09,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x280"
+            },
+            "observed_input_bits": 4,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 27,
+          "radix_bits": 32,
+          "lifts": 50,
+          "sparse_products": 1100,
+          "digit_storage_bytes": 1600,
+          "python_tracemalloc_peak_bytes": 12351,
+          "seconds": [
+            0.0003046670462936163,
+            0.0003409170312806964,
+            0.00028087489772588015
+          ],
+          "median_seconds": 0.0003046670462936163,
+          "cpu_seconds": [
+            0.00030399999999997096,
+            0.00034000000000000696,
+            0.000280000000000058
+          ],
+          "relative_l2_error": 6.062667359207788e-09,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x280"
+            },
+            "observed_input_bits": 4,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 27,
+          "radix_bits": 32,
+          "lifts": 50,
+          "sparse_products": 1100,
+          "digit_storage_bytes": 1600,
+          "python_tracemalloc_peak_bytes": 11704,
+          "seconds": [
+            0.0007957499474287033,
+            0.0008187079802155495,
+            0.0007414169376716018
+          ],
+          "median_seconds": 0.0007957499474287033,
+          "cpu_seconds": [
+            0.0007869999999999822,
+            0.0007840000000000069,
+            0.0007399999999999629
+          ],
+          "relative_l2_error": 6.062667359207788e-09,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "indefinite_tridiagonal",
+      "n": 16,
+      "nnz": 46,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa00"
+            },
+            "observed_input_bits": 5,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=1, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 34,
+          "radix_bits": 40,
+          "lifts": 98,
+          "sparse_products": 4508,
+          "digit_storage_bytes": 7840,
+          "python_tracemalloc_peak_bytes": 31803,
+          "seconds": [
+            0.0011661669705063105,
+            0.001103582908399403,
+            0.0011116249952465296
+          ],
+          "median_seconds": 0.0011116249952465296,
+          "cpu_seconds": [
+            0.0011579999999999924,
+            0.0010940000000000394,
+            0.0011120000000000019
+          ],
+          "relative_l2_error": 5.930275679195313e-11,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa00"
+            },
+            "observed_input_bits": 5,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 34,
+          "radix_bits": 40,
+          "lifts": 98,
+          "sparse_products": 4508,
+          "digit_storage_bytes": 7840,
+          "python_tracemalloc_peak_bytes": 31955,
+          "seconds": [
+            0.0011724589858204126,
+            0.0010740000288933516,
+            0.0010012919083237648
+          ],
+          "median_seconds": 0.0010740000288933516,
+          "cpu_seconds": [
+            0.0011419999999999764,
+            0.0010700000000000154,
+            0.0010000000000000009
+          ],
+          "relative_l2_error": 5.930275679195313e-11,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa00"
+            },
+            "observed_input_bits": 5,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 34,
+          "radix_bits": 40,
+          "lifts": 98,
+          "sparse_products": 4508,
+          "digit_storage_bytes": 7840,
+          "python_tracemalloc_peak_bytes": 32176,
+          "seconds": [
+            0.006728832959197462,
+            0.006854249979369342,
+            0.006647041067481041
+          ],
+          "median_seconds": 0.006728832959197462,
+          "cpu_seconds": [
+            0.006708999999999965,
+            0.006821999999999995,
+            0.00664000000000009
+          ],
+          "relative_l2_error": 5.930275679195313e-11,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "indefinite_tridiagonal",
+      "n": 32,
+      "nnz": 94,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x2800"
+            },
+            "observed_input_bits": 6,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=1, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 41,
+          "radix_bits": 48,
+          "lifts": 194,
+          "sparse_products": 18236,
+          "digit_storage_bytes": 37248,
+          "python_tracemalloc_peak_bytes": 99551,
+          "seconds": [
+            0.004167082952335477,
+            0.0043475000420585275,
+            0.004256209009326994
+          ],
+          "median_seconds": 0.004256209009326994,
+          "cpu_seconds": [
+            0.0041639999999998345,
+            0.0043320000000000025,
+            0.0042519999999999225
+          ],
+          "relative_l2_error": 7.396443562702627e-13,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x2800"
+            },
+            "observed_input_bits": 6,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 41,
+          "radix_bits": 48,
+          "lifts": 194,
+          "sparse_products": 18236,
+          "digit_storage_bytes": 37248,
+          "python_tracemalloc_peak_bytes": 99735,
+          "seconds": [
+            0.004017165978439152,
+            0.004226999939419329,
+            0.004254583967849612
+          ],
+          "median_seconds": 0.004226999939419329,
+          "cpu_seconds": [
+            0.004013000000000044,
+            0.00421500000000008,
+            0.0042480000000000295
+          ],
+          "relative_l2_error": 7.396443562702627e-13,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x2800"
+            },
+            "observed_input_bits": 6,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 41,
+          "radix_bits": 48,
+          "lifts": 194,
+          "sparse_products": 18236,
+          "digit_storage_bytes": 37248,
+          "python_tracemalloc_peak_bytes": 101976,
+          "seconds": [
+            0.06433645903598517,
+            0.06435258302371949,
+            0.06476441596169025
+          ],
+          "median_seconds": 0.06435258302371949,
+          "cpu_seconds": [
+            0.06423200000000007,
+            0.06418199999999996,
+            0.06459700000000002
+          ],
+          "relative_l2_error": 7.396443562702627e-13,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "nonnormal_bidiagonal",
+      "n": 4,
+      "nnz": 7,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa0"
+            },
+            "observed_input_bits": 3,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=1, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 20,
+          "radix_bits": 24,
+          "lifts": 26,
+          "sparse_products": 182,
+          "digit_storage_bytes": 312,
+          "python_tracemalloc_peak_bytes": 5801,
+          "seconds": [
+            0.00014187500346451998,
+            8.787494152784348e-05,
+            8.612510282546282e-05
+          ],
+          "median_seconds": 8.787494152784348e-05,
+          "cpu_seconds": [
+            0.00014099999999994672,
+            8.799999999986596e-05,
+            8.700000000017027e-05
+          ],
+          "relative_l2_error": 4.554106667998144e-07,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa0"
+            },
+            "observed_input_bits": 3,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 20,
+          "radix_bits": 24,
+          "lifts": 26,
+          "sparse_products": 182,
+          "digit_storage_bytes": 312,
+          "python_tracemalloc_peak_bytes": 5953,
+          "seconds": [
+            9.462493471801281e-05,
+            8.849997539073229e-05,
+            8.754199370741844e-05
+          ],
+          "median_seconds": 8.849997539073229e-05,
+          "cpu_seconds": [
+            9.40000000000385e-05,
+            8.799999999986596e-05,
+            8.399999999997299e-05
+          ],
+          "relative_l2_error": 4.554106667998144e-07,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x10",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa0"
+            },
+            "observed_input_bits": 3,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 20,
+          "radix_bits": 24,
+          "lifts": 26,
+          "sparse_products": 182,
+          "digit_storage_bytes": 312,
+          "python_tracemalloc_peak_bytes": 4904,
+          "seconds": [
+            9.437499102205038e-05,
+            8.979206904768944e-05,
+            8.749996777623892e-05
+          ],
+          "median_seconds": 8.979206904768944e-05,
+          "cpu_seconds": [
+            9.40000000000385e-05,
+            8.900000000000574e-05,
+            8.699999999994823e-05
+          ],
+          "relative_l2_error": 4.554106667998144e-07,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "nonnormal_bidiagonal",
+      "n": 8,
+      "nnz": 15,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x280"
+            },
+            "observed_input_bits": 4,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=1, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 27,
+          "radix_bits": 32,
+          "lifts": 50,
+          "sparse_products": 750,
+          "digit_storage_bytes": 1600,
+          "python_tracemalloc_peak_bytes": 11147,
+          "seconds": [
+            0.0003054169937968254,
+            0.0002863750560209155,
+            0.0002508750185370445
+          ],
+          "median_seconds": 0.0002863750560209155,
+          "cpu_seconds": [
+            0.00030399999999985994,
+            0.00028600000000000847,
+            0.00024999999999986144
+          ],
+          "relative_l2_error": 6.404030498239352e-09,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x280"
+            },
+            "observed_input_bits": 4,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 27,
+          "radix_bits": 32,
+          "lifts": 50,
+          "sparse_products": 750,
+          "digit_storage_bytes": 1600,
+          "python_tracemalloc_peak_bytes": 11299,
+          "seconds": [
+            0.0002615000121295452,
+            0.0002597499405965209,
+            0.0002419579541310668
+          ],
+          "median_seconds": 0.0002597499405965209,
+          "cpu_seconds": [
+            0.0002609999999998447,
+            0.0002590000000000092,
+            0.0002420000000000755
+          ],
+          "relative_l2_error": 6.404030498239352e-09,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x40",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x280"
+            },
+            "observed_input_bits": 4,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 27,
+          "radix_bits": 32,
+          "lifts": 50,
+          "sparse_products": 750,
+          "digit_storage_bytes": 1600,
+          "python_tracemalloc_peak_bytes": 10572,
+          "seconds": [
+            0.000512958038598299,
+            0.0005380420479923487,
+            0.0004887919640168548
+          ],
+          "median_seconds": 0.000512958038598299,
+          "cpu_seconds": [
+            0.000512000000000068,
+            0.0005299999999999194,
+            0.00048800000000004395
+          ],
+          "relative_l2_error": 6.404030498239352e-09,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "nonnormal_bidiagonal",
+      "n": 16,
+      "nnz": 31,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa00"
+            },
+            "observed_input_bits": 5,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=1, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 34,
+          "radix_bits": 40,
+          "lifts": 98,
+          "sparse_products": 3038,
+          "digit_storage_bytes": 7840,
+          "python_tracemalloc_peak_bytes": 27955,
+          "seconds": [
+            0.0008941249689087272,
+            0.0009146250085905194,
+            0.0008117500692605972
+          ],
+          "median_seconds": 0.0008941249689087272,
+          "cpu_seconds": [
+            0.0008930000000000327,
+            0.0009129999999999416,
+            0.0008109999999998951
+          ],
+          "relative_l2_error": 5.185575775406968e-11,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa00"
+            },
+            "observed_input_bits": 5,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 34,
+          "radix_bits": 40,
+          "lifts": 98,
+          "sparse_products": 3038,
+          "digit_storage_bytes": 7840,
+          "python_tracemalloc_peak_bytes": 28107,
+          "seconds": [
+            0.0008084999863058329,
+            0.0009428750490769744,
+            0.0007712909718975425
+          ],
+          "median_seconds": 0.0008084999863058329,
+          "cpu_seconds": [
+            0.0008079999999999199,
+            0.0009269999999999001,
+            0.0007709999999998551
+          ],
+          "relative_l2_error": 5.185575775406968e-11,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x100",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0xa00"
+            },
+            "observed_input_bits": 5,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 34,
+          "radix_bits": 40,
+          "lifts": 98,
+          "sparse_products": 3038,
+          "digit_storage_bytes": 7840,
+          "python_tracemalloc_peak_bytes": 28096,
+          "seconds": [
+            0.0038401249330490828,
+            0.0038496250053867698,
+            0.0038031250005587935
+          ],
+          "median_seconds": 0.0038401249330490828,
+          "cpu_seconds": [
+            0.0038400000000000656,
+            0.0038400000000000656,
+            0.003794000000000075
+          ],
+          "relative_l2_error": 5.185575775406968e-11,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    },
+    {
+      "family": "nonnormal_bidiagonal",
+      "n": 32,
+      "nnz": 63,
+      "policies": [
+        {
+          "policy": "automatic_default",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "automatic",
+            "condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "caller-supplied, unchecked matrix promise",
+            "requested_condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x2800"
+            },
+            "observed_input_bits": 6,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Default fast FLINT reconstruction; unavailable means an error.",
+              "Smallest admissible positive c: max(input=1, condition=2, accuracy=1).",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 41,
+          "radix_bits": 48,
+          "lifts": 194,
+          "sparse_products": 12222,
+          "digit_storage_bytes": 37248,
+          "python_tracemalloc_peak_bytes": 85523,
+          "seconds": [
+            0.0030704160453751683,
+            0.003215541015379131,
+            0.0032335410360246897
+          ],
+          "median_seconds": 0.003215541015379131,
+          "cpu_seconds": [
+            0.0030689999999999884,
+            0.0032049999999999024,
+            0.0032320000000001237
+          ],
+          "relative_l2_error": 7.100369737454532e-13,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_flint",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x2800"
+            },
+            "observed_input_bits": 6,
+            "reconstruction": "flint",
+            "selection_reasons": [
+              "Explicit flint reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 41,
+          "radix_bits": 48,
+          "lifts": 194,
+          "sparse_products": 12222,
+          "digit_storage_bytes": 37248,
+          "python_tracemalloc_peak_bytes": 85707,
+          "seconds": [
+            0.003151708049699664,
+            0.0030770410085096955,
+            0.0031700829276815057
+          ],
+          "median_seconds": 0.003151708049699664,
+          "cpu_seconds": [
+            0.0031440000000000357,
+            0.003074999999999939,
+            0.003163000000000249
+          ],
+          "relative_l2_error": 7.100369737454532e-13,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        },
+        {
+          "policy": "explicit_euclid",
+          "effective_configuration": {
+            "c": 2,
+            "c_source": "explicit legacy contract",
+            "condition_bound": {
+              "numerator_hex": "0x400",
+              "denominator_hex": "0x1"
+            },
+            "condition_bound_source": "implicit legacy n**c promise, unchecked",
+            "requested_condition_bound": null,
+            "requested_relative_tolerance": null,
+            "relative_error_bound": {
+              "numerator_hex": "0x1",
+              "denominator_hex": "0x2800"
+            },
+            "observed_input_bits": 6,
+            "reconstruction": "euclid",
+            "selection_reasons": [
+              "Explicit euclid reconstruction.",
+              "Explicit c retained: no change to the legacy rounding or error contract.",
+              "Default accuracy is exactly the conditional n**(-c)/10 guarantee.",
+              "h=4+B+(2c+1)*ceil(log2(n)); radix bits round upward to a byte; L=6n+2."
+            ],
+            "matrix_promises_verified": false
+          },
+          "rounding_bits": 41,
+          "radix_bits": 48,
+          "lifts": 194,
+          "sparse_products": 12222,
+          "digit_storage_bytes": 37248,
+          "python_tracemalloc_peak_bytes": 87332,
+          "seconds": [
+            0.03585320804268122,
+            0.03621804201975465,
+            0.036081291968002915
+          ],
+          "median_seconds": 0.036081291968002915,
+          "cpu_seconds": [
+            0.0358099999999999,
+            0.03616399999999986,
+            0.036052000000000195
+          ],
+          "relative_l2_error": 7.100369737454532e-13,
+          "exact_error_check": true,
+          "width_check": true,
+          "rational_output_identical_across_policies": true
+        }
+      ]
+    }
+  ]
+}

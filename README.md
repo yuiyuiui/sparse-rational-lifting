@@ -1,16 +1,93 @@
 # Sparse rational lifting
 
-A Python implementation of the rational-input specialization of Jonathan A.
-Kelner's identity-modulus sparse linear solver. The algorithmic mechanism and
-fast bounded rational reconstruction are due to Kelner; this package supplies
-explicit rational rounding, a native reconstruction binding and finite checks.
+A Python implementation of Jonathan A. Kelner's identity-modulus sparse
+linear solver, specialized to short rational inputs. The core algorithm and
+fast bounded rational reconstruction are due to Kelner; this package provides
+rational rounding, a native binding, callable API and finite validation.
+See [Kelner's primary preprint](https://arxiv.org/abs/2609.38101v1), Theorem 2.3
+and Section 3, and the [pinned mathematical input contract](https://github.com/MColbrook/AIM/blob/c9929805cece044705abaaebe1cebddac1ba11a6/problems/044-sparse-linear-solve-bit-complexity.md).
+No algorithmic priority or upstream acceptance is asserted.
 
-For the mathematical source, see Kelner, [Solving Linear Systems in
-~O(mn log(κ/ε)) Bit Operations](https://arxiv.org/abs/2609.38101v1),
-Theorem 2.3 and Section 3, and the
-[pinned AIM 044 statement](https://github.com/MColbrook/AIM/blob/c9929805cece044705abaaebe1cebddac1ba11a6/problems/044-sparse-linear-solve-bit-complexity.md).
-This is an implementation and rational-input specialization, with no claim of
-algorithmic priority or upstream acceptance.
+The implementation, API, tests, benchmarks and documentation were produced by
+AI agents under Kaiwen Jin's direction. This includes the API and parameter
+policy maintenance in version 0.2.0. FLINT and python-flint are third-party
+projects with their own attribution and licenses. AI development and finite
+tests do not establish independent human review or formal proof certification.
+
+## Install and make a default call
+
+Python 3.11+ and the pinned `python-flint==0.8.0` wheel are required for the
+fast backend. Its native binding supports LP64 64-bit macOS/Linux; this
+release was exercised on macOS arm64, Python 3.13.3 and FLINT 3.3.1.
+Linux was not executed in this validation; Windows/custom FLINT builds are
+unsupported by the native binding.
+
+From a checkout of this repository, install the package rather than relying
+on `PYTHONPATH`:
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install .
+.venv/bin/python -m aim044_lift numerical_case/example-auto.json
+```
+
+```python
+from fractions import Fraction
+from aim044_lift import solve
+
+# The diagonal magnitudes justify condition number 3 for this specific matrix.
+entries = [(0, 0, -1), (1, 1, Fraction(1, 3))]
+result = solve(2, entries, [1, 1], condition_bound=3)
+print(result.config.as_dict())  # selected c=2; conditional error bound 1/40
+for value in result.x:
+    print(hex(value.numerator), hex(value.denominator))
+```
+
+For n>1, supply a justified condition-number upper bound or the legacy c
+promise. General conditioning is not inferred from entries. No universal
+`c=2` default is assumed. A missing promise produces an actionable error.
+For a validated nonzero 1-by-1 scalar, the exact condition number is 1 and
+can be selected without an additional promise.
+
+## Parameters and useful choices
+
+The [complete API contract](docs/API.md) gives every type, range, default,
+selection rule, error and accuracy/work/storage consequence. All values are
+dimensionless after application-specific scaling.
+
+| Input or setting | Default and recommendation |
+| --- | --- |
+| `n`, `entries`, `rhs` | Required square dimension, unique zero-based nonzero triples, and nonzero rational right-hand side. Prefer `int`/`Fraction`; finite floats retain their exact binary value. |
+| `c` | `None`: automatically choose the smallest admissible positive exponent. Existing positional/keyword c calls keep their compound promise and output. |
+| `condition_bound` | `None`: require justified information when automatic selection is not possible. A caller-supplied bound is not a matrix-condition certificate. With explicit c it must fit the c contract. |
+| `relative_tolerance` | `None`: use n**(-c)/10 after selection. Supply an exact positive tolerance to request a stricter target; the selector raises c or reports incompatibility. For n=1 the supported guarantee is 1/10. |
+| `reconstruction` | `None` resolves to fast `"flint"`. Explicit `"euclid"` is a slower exact reference with a different bit complexity. Unavailable FLINT causes an error before lifting; no fallback or accuracy relaxation. |
+| `trace` | `None`. Optional callback for diagnostic integer residuals/digits; callback work and storage are outside production solver costs. |
+
+The automatic exponent covers the observed rational-input bits, the supplied
+condition bound and any requested accuracy, using exact integer/rational
+comparisons. The same implementation serves API and CLI. Rounding scale,
+byte-aligned radix and lifting count are selected internally and exposed by
+the result; users do not tune them. A larger exponent can increase arithmetic
+width, memory and runtime. The default policy is not claimed to be optimal.
+
+```python
+strict = solve(2, entries, [1, 1], condition_bound=3,
+               relative_tolerance=Fraction(1, 1000))
+reference_mode = solve(2, entries, [1, 1], condition_bound=3,
+                       reconstruction="euclid")
+legacy = solve(2, entries, [1, 1], 2)
+assert result.x == reference_mode.x == legacy.x
+```
+
+`result.config` records the actual contract and selection reasons;
+`result.as_dict()` supplies exact hexadecimal rational pairs and JSON-ready
+configuration. `matrix_promises_verified` remains false. Nonsingularity and
+conditioning are not certified by a successful solve. For the promised
+short-rational input model and fixed c, the mathematical construction's bound
+is deterministic `~O_c(nm)` bit operations with relative Euclidean solution
+error at most n**(-c)/10. Exact reference solutions and callback diagnostics
+are separate validation work.
 
 ## Results at a glance
 
@@ -49,96 +126,51 @@ also include [recorded timing medians and ranges](numerical_case/figures/timing.
 from three warm repeats on the recorded machine. Plotting scripts and the
 small validated source data are public.
 
-## Input and output
-
-For every fixed positive integer `c`, the promised input is a nonsingular
-`n × n` rational matrix supplied as unique nonzero `(row, column, value)`
-entries, a nonzero rational vector `b`, and `κ₂(A) ≤ nᶜ`. Indices are zero
-based. Each numerator and positive denominator has at most
-`B = c ceil(log₂(2n))` bits. The solver returns reduced rational pairs for an
-approximation with relative Euclidean solution error at most `n⁻ᶜ / 10`.
-The mathematical construction uses deterministic `~O_c(nm)` bit operations,
-where `m` is the number of nonzeros and hidden factors are logarithmic in `2n`.
-
-The function checks dimensions, sparse indices, duplicate/zero entries, the
-nonzero right-hand side and input bit bounds. Nonsingularity and the condition
-bound are promises; it does not certify them. The operation bound includes the
-solver's rounding, short sparse products, one digit assembly per coordinate,
-fast bounded reconstruction and rational output. Exact Gaussian references,
-optional tracing and diagnostic Fraction conversions are outside that bound.
-
-## Install and run
-
-Python 3.11 or newer and the pinned binary wheel `python-flint==0.8.0` are
-required. The native binding requires one bundled FLINT library and the LP64
-ABI on 64-bit macOS or Linux. Validation was performed on macOS arm64, Python
-3.13.3, python-flint 0.8.0 / FLINT 3.3.1; Linux was not executed in this run.
-The ABI is checked before native calls. Windows and custom non-wheel FLINT
-builds are unsupported by this binding.
+## Tests, benchmarks and reproduction
 
 ```sh
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-PYTHONPATH=src .venv/bin/python -m aim044_lift numerical_case/example.json
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m unittest discover -s test -v
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python numerical_case/benchmark_policies.py --output numerical_case/raw/policies-reproduction
 ```
 
-Output numerators and denominators use hexadecimal strings, so long output
-integers do not require decimal conversion. To use the API:
+Use a fresh output directory. [All 30 tests](test/) passed in a fresh wheel
+installation, including the minimal API/CLI path, overrides, automatic branches,
+invalid/unavailable choices, exact Gaussian references, large reconstruction
+and preserved legacy output. [Policy regression tests](test/test_api.py) cover
+the new selection contract; [reference tests](test/test_solver.py) exercise
+the mathematical arithmetic and representation.
 
-```python
-from fractions import Fraction
-from aim044_lift import solve
+The [matched policy report](numerical_case/published/POLICY_SUMMARY.md) compares
+16 fixed inputs × three configurations: automatic defaults, explicit FLINT,
+and explicit Euclid. All 48 policy/input combinations passed exact error and
+residual-width checks and returned identical rational outputs at the same
+accuracy requirement. Three rotated warm repeats include input normalization,
+parameter selection and the entire solve. The recorded run took 2.31 seconds
+in total, with about 38.3 MiB whole-process peak RSS, including independent
+references and separate allocation checks. Per-policy Python allocation
+figures exclude native allocations; this is not a claim of general speedup
+or an optimal default.
 
-result = solve(2, [(0, 0, Fraction(-1)), (1, 1, Fraction(1, 3))], [1, 1], c=2)
-for value in result.x:
-    print(hex(value.numerator), hex(value.denominator))
-```
+The original [16-case report](numerical_case/published/SUMMARY.md), four vector
+figures and 195-state trace have also been regenerated for these source bytes.
+See [all case, figure and benchmark reproduction commands](numerical_case/README.md).
+These are finite software checks, not an all-input theorem certificate or an
+experimental proof of asymptotic complexity.
 
-## Tests and bounded reproduction
+## Version and validation limits
 
-```sh
-PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
-  .venv/bin/python -m unittest discover -s test -v
-PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
-  .venv/bin/python numerical_case/benchmark.py --output numerical_case/raw/reproduction
-```
+[0.2.0 changes and compatibility notes](docs/CHANGELOG.md) describe the additive
+API/configuration fields. The [0.2.0 inventory](releases/v0.2.0/PUBLIC_MANIFEST.json)
+and [checksums](releases/v0.2.0/SHA256SUMS) bind the current public files. The root
+`PUBLIC_MANIFEST.json` and `SHA256SUMS` are preserved historical 0.1.0 inventories
+for [revision 6c372b6](https://github.com/yuiyuiui/sparse-rational-lifting/tree/6c372b68a56923f1b4c630adb874144377c890e4).
+Earlier cited revisions remain available.
 
-Use a fresh reproduction output directory. The script caps execution at
-60 seconds and uses four admissible families at `n=4,8,16,32`, `c=2`, with
-three warm solver timing repeats. An independent exact Gaussian solve checks
-the squared relative-error inequality without floating-point tolerances.
-The tests also check signed reconstruction, rejected reconstruction domains,
-zero coordinates, residual widths and a 32,768-bit modulus.
-
-All 14 tests and 16 fixed cases passed in the recorded run. The selected small
-reports in [numerical_case/published](numerical_case/published) record source
-hashes, dependency versions, exact acceptance flags, widths and scalar timings.
-See [case definitions and reproduction limits](numerical_case/README.md).
-These are finite software checks, not an experimental proof of asymptotic
-complexity or an all-input certificate. The diagonal conditioning endpoint,
-small-scale diagonal, indefinite tridiagonal and nonnormal bidiagonal families
-have analytically checked input promises.
-
-## Reconstruction and representation
-
-The default `flint` backend calls FLINT 3.3.1's
-[`fmpq_reconstruct_fmpz_2`](https://github.com/flintlib/flint/blob/v3.3.1/src/fmpq/reconstruct_fmpz_2.c).
-Its large-integer branch uses recursive half-GCD in
-[`get_cfrac_helpers.c`](https://github.com/flintlib/flint/blob/v3.3.1/src/fmpq/get_cfrac_helpers.c).
-Base-16 transfers avoid long decimal conversions. Digits are stored in byte
-arrays and concatenated once. The radix exponent is rounded upward to a
-multiple of eight, adding at most seven bits while preserving the proved
-width and complexity bounds. Returned denominators are odd, so scaling the
-numerators by the power-of-two radix does not introduce a long Python gcd.
-
-`solve(..., reconstruction="euclid")` selects a separate classical Euclidean
-reference. That mode has a different bit complexity and is not the fast backend
-used in the theorem. The package does not vendor FLINT source or binaries;
-FLINT and python-flint retain their own licenses.
-
-## Attribution and AI use
-
-Manuscript author: Kaiwen Jin. OpenAI Codex assisted with literature retrieval,
-derivation, proof checking, implementation and finite-case validation.
-No independent human review or formal verification is asserted. The lifting
-method and fast reconstruction theorem are attributed to Kelner.
+The default calls FLINT 3.3.1's
+[bounded reconstruction](https://github.com/flintlib/flint/blob/v3.3.1/src/fmpq/reconstruct_fmpz_2.c)
+and its [recursive half-GCD helpers](https://github.com/flintlib/flint/blob/v3.3.1/src/fmpq/get_cfrac_helpers.c).
+Native initialization sets one FLINT thread; concurrent manipulation of that
+process-global setting by another client is not validated. Very large inputs,
+condition promises or accuracy requests can consume substantial resources;
+no implicit truncation or reduced-precision mode is used. No third-party
+source or binaries are vendored.

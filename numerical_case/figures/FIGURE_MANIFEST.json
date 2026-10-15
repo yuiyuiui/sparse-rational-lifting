@@ -2,8 +2,8 @@
   "schema_version": 1,
   "evidence_status": "NUMERICAL EVIDENCE: fixed finite cases only",
   "data_sha256": {
-    "published/results.json": "e0d7b41518a1e3980c3b5ac76fa1869b51e3f0906a06be23ffce0cf7caf74b76",
-    "published/lifting_trace.json": "0898a5cd483ec05daebcfe18d69e7545e79caf2f0ecb73f009a6e079c3858388"
+    "published/results.json": "ad8dc7d0b38565ac1c01740e9b019251ead4b6b4b2b6fb7d8349acde0a280b5b",
+    "published/lifting_trace.json": "a27479c6b0906a5bda235f107ec616b6e2181ec23f6d3e2f90af4f7a6752bab9"
   },
   "plot_script_sha256": "3423b072d1396d9e8b682fb984d3299a73263a982ab38737be94870f1bd61a9e",
   "environment": {
@@ -20,6 +20,6 @@
     "accuracy.svg": "a99e137c394d8ed8ce4c26faa881f438b6cea9817bc1dd5645fc55b52673a897",
     "lifting_width.svg": "a9c19effc1eef1a9a7bc02f45cdf1e9964dbb308c572cd4c333a8d769e74dcbc",
     "sparse_work.svg": "c2521816127e3c461e7997fe8cd857fa1629b82a35ad8c7a46bbb37e69b1995d",
-    "timing.svg": "c40705be56f8fa4221a32d7786642c1490022b7f1b0b2f110f6e7c11cbf3d785"
+    "timing.svg": "2738ed873f2e1709ab1442ed716828fc4c2b05d993e01762aadf5879b662ed59"
   }
 }

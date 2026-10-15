@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "recorded_at": "2026-10-11T18:24:08.896658+00:00",
+  "recorded_at": "2026-10-15T09:59:06.068960+00:00",
   "case": {
     "family": "conditioning_boundary",
     "n": 32,
@@ -18,15 +18,16 @@
     "python_flint": "0.8.0"
   },
   "source_sha256": {
-    "src/aim044_lift/solver.py": "2a98fa981bb904bcc516ea5cb8c4864682559903d67f827740207f1695b40694",
-    "src/aim044_lift/__init__.py": "19b4eff855f4745a7a59cf06f7f7c62f7e4940f5ae7049be2d156e8bfb64670b",
-    "src/aim044_lift/reconstruct.py": "df03ff495045a3624e163d6d5ce1d8d41591b5bbcf16ef24d2e99ba63b3216d8",
-    "src/aim044_lift/__main__.py": "4f63b45c58e122ec9a43c46aae110b22f74dee95f12eba0b52917d5c61ded165",
+    "src/aim044_lift/solver.py": "d8e0a3fcd571b059b2f555b1319936f9276b610dbec3ba05b06b5d20ac22df62",
+    "src/aim044_lift/__init__.py": "b823d7b2b5cd886614c85cdd1fc418d0b5560b267b1238c72de4d0f5eae3c294",
+    "src/aim044_lift/parameters.py": "ff7ed3a7a0ddfbf836783f8c16e507a4b4bb5868b3516bedd45c7418b8aa7a1f",
+    "src/aim044_lift/reconstruct.py": "54ea49184a8652f5dbc00aaab13a280487986fa827909fcb21fe53db93f57ee1",
+    "src/aim044_lift/__main__.py": "1e779621c9ca29420961960d83f870c3b57f10686900919e8fbb0c748e3c33b4",
     "test/test_solver.py": "fdd3c50e3233655e33bee74846680713858f3ba382a130a57c81939a04b91e61",
-    "numerical_case/benchmark.py": "8e158acc69a0d4adade9500af5d019bdebaf6c0876130821fa81d3587ff97d6e",
+    "numerical_case/benchmark.py": "ed7230e464821d76f6966244e69e23b68a72a06deb9161421bcb92530807f7ce",
     "numerical_case/trace_case.py": "905ae196d9489217fde05033730354106aec92089d3ac11f8061db31aa4536ff"
   },
-  "benchmark_sha256": "e0d7b41518a1e3980c3b5ac76fa1869b51e3f0906a06be23ffce0cf7caf74b76",
+  "benchmark_sha256": "ad8dc7d0b38565ac1c01740e9b019251ead4b6b4b2b6fb7d8349acde0a280b5b",
   "validation": {
     "all_callback_states_and_digits_match_independent_recurrence": true,
     "exact_stronger_error_inequality": true,

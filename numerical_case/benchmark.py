@@ -81,6 +81,7 @@ def main():
                 "exact_stronger_error_check": exact_pass, "width_check": width_pass,
                 "seconds": times, "median_seconds": statistics.median(times),
                 "reconstruction": result.reconstruction,
+                "effective_configuration": result.config.as_dict(),
             })
     signal.alarm(0)
     relevant = list((ROOT/"src").rglob("*.py")) + [ROOT/"test/test_solver.py", Path(__file__)]

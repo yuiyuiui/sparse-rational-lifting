@@ -1,10 +1,13 @@
 # Fixed reproduction cases
 
+First install the package with `.venv/bin/python -m pip install .`, as shown
+in the root README. All scripts use that installed package.
+
 Run from the repository root with a fresh output directory:
 
 ```sh
-PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
-  python numerical_case/benchmark.py --output numerical_case/raw/reproduction
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+  .venv/bin/python numerical_case/benchmark.py --output numerical_case/raw/reproduction
 ```
 
 The script runs exactly four families at n=4,8,16,32, all with c=2, and three
@@ -71,7 +74,7 @@ To independently regenerate the selected trace, without rerunning the timing
 cases, use another fresh directory:
 
 ```sh
-PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
   .venv/bin/python numerical_case/trace_case.py --output numerical_case/raw/trace-reproduction
 MPLCONFIGDIR=numerical_case/raw/mpl-config .venv/bin/python \
   numerical_case/plot_results.py \
@@ -85,3 +88,38 @@ fixed case. Selected inputs are `published/results.json` and
 `published/lifting_trace.json`; the original timing data remain unchanged.
 The figure manifest belongs with `figures/`. Raw reproduction and preview
 outputs stay in the ignored `raw/` directory.
+
+## API/default-policy comparisons (0.2.0)
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python \
+  numerical_case/benchmark_policies.py --output numerical_case/raw/policies-reproduction
+```
+
+This fixed 60-second-capped run compares `automatic_default`, `explicit_flint`
+and `explicit_euclid` on the same four families and dimensions. For the default
+path, the justified common input promise is `condition_bound=n**2`; explicit
+paths supply c=2. Thus all modes have identical input, rounding and requested
+error contracts. It is a deliberately matched comparison, not a search for
+an optimal condition estimate or an accuracy-confounded speedup.
+
+The script rotates the three execution orders over three warm repeats. Timings
+include conversion/normalization, automatic selection or explicit checks,
+backend preflight, rounding, lifting, reconstruction and result creation.
+Reference construction, exact error checks and separate tracemalloc calls are
+outside production times. Outputs must agree as exact rational pairs and meet
+the n^-2/10 error bound against independent Gaussian elimination.
+
+[policy_results.json](published/policy_results.json) stores actual effective
+configuration/selection reasons, source hashes, Python/FLINT/package versions,
+thread settings, exact acceptance flags, timings, CPU time, digit-storage
+counts and memory measurements. [POLICY_SUMMARY.md](published/POLICY_SUMMARY.md)
+provides the compact timing table. Tracemalloc excludes native allocations;
+whole-process peak RSS includes references/instrumentation and is not per-mode
+memory. No seed is used. These small fixed data do not establish general
+optimality or asymptotic scaling.
+
+All selected case/trace data and the four figures in the 0.2.0 inventory were
+regenerated using the current package. The historical 0.1.0 inventories remain
+unchanged at repository root and refer to their pinned earlier revision. For
+current file verification use `releases/v0.2.0/SHA256SUMS` from repository root.

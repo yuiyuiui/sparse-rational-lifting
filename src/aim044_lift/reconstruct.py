@@ -74,6 +74,12 @@ def _library():
     return lib
 
 
+def ensure_backend(name):
+    """Check an explicitly selected backend before the costly lifting phase."""
+    if name == "flint":
+        _library()
+
+
 def recover_flint(residue, modulus, height):
     """Recover with FLINT's recursive half-GCD bounded reconstruction.
 
