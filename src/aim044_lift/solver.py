@@ -2,9 +2,10 @@
 
 from dataclasses import asdict, dataclass
 from fractions import Fraction
+from itertools import chain
 
 from .parameters import SolveConfiguration, select_contract
-from .reconstruct import ensure_backend, recover_euclid, recover_flint
+from .reconstruct import ensure_backend, recover_euclid, recover_many_flint
 
 
 @dataclass(frozen=True)
@@ -84,12 +85,11 @@ def solve(n, entries, rhs, c=None, *, condition_bound=None,
     if len(checked) < n:
         raise ValueError("A nonsingular n-by-n matrix needs at least n nonzeros")
     observed_bits = max(max(abs(value.numerator).bit_length(), value.denominator.bit_length())
-                        for value in (*rhs, *(value for _, _, value in checked)))
+                        for value in chain(rhs, (value for _, _, value in checked)))
     config = select_contract(n, observed_bits, c, condition_bound,
                              relative_tolerance, reconstruction)
     c = config.c
     reconstruction = config.reconstruction
-    recover = {"flint": recover_flint, "euclid": recover_euclid}[reconstruction]
     # Fail before allocating digit blocks or running callbacks if native recovery is unavailable.
     ensure_backend(reconstruction)
     bit_bound = c * (2 * n - 1).bit_length()
@@ -107,13 +107,13 @@ def solve(n, entries, rhs, c=None, *, condition_bound=None,
     lifts = 6 * n + 2
     blocks = [bytearray() for _ in range(n)]
     residual = list(d)
-    max_bits = 0
+    max_bits = max(abs(value).bit_length() for value in residual)
+    digit_bytes = s // 8
     row_sums = [0] * n
     for row, _, value in converted:
         row_sums[row] += abs(value)
     residual_bound = max(max(abs(value) for value in d), 1 + radix * max(row_sums))
     for iteration in range(lifts):
-        max_bits = max(max_bits, max(abs(value).bit_length() for value in residual))
         digit = [value & mask for value in residual]
         if trace is not None:
             trace(iteration, tuple(residual), tuple(digit))
@@ -121,15 +121,23 @@ def solve(n, entries, rhs, c=None, *, condition_bound=None,
         for row, col, value in converted:
             product[row] += value * digit[col]
         for i in range(n):
-            blocks[i].extend(digit[i].to_bytes(s // 8, "little"))
+            blocks[i].extend(digit[i].to_bytes(digit_bytes, "little"))
             residual[i] = ((residual[i] - digit[i]) >> s) - product[i]
-    max_bits = max(max_bits, max(abs(value).bit_length() for value in residual))
+            bits = abs(residual[i]).bit_length()
+            if bits > max_bits:
+                max_bits = bits
     modulus = 1 << (lifts * s)
     height = 1 << (3 * n * s)
+    # Consume digit buffers in original coordinate order, releasing each after
+    # conversion instead of retaining the complete digit array through recovery.
+    blocks.reverse()
+    residues = (int.from_bytes(blocks.pop(), "little") for _ in range(n))
+    pairs = (recover_many_flint(residues, modulus, height) if reconstruction == "flint"
+             else [recover_euclid(value, modulus, height) for value in residues])
     output = []
-    for block in blocks:
-        numerator, denominator = recover(int.from_bytes(block, "little"), modulus, height)
+    for index, (numerator, denominator) in enumerate(pairs):
         output.append(Rational(numerator << s, denominator))
+        pairs[index] = None  # Release the unscaled numerator immediately.
     return SolveResult(tuple(output), n, len(checked), len(converted), bit_bound,
                        h, s, lifts, lifts * len(converted), max_bits,
                        residual_bound.bit_length(), reconstruction, config)

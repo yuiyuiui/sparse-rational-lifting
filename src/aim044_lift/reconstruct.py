@@ -68,9 +68,6 @@ def _library():
     lib.flint_free.restype = None
     lib.fmpq_reconstruct_fmpz_2.argtypes = [ctypes.POINTER(_Fmpq)] + [word_pointer] * 4
     lib.fmpq_reconstruct_fmpz_2.restype = ctypes.c_int
-    lib.flint_set_num_threads.argtypes = [ctypes.c_int]
-    lib.flint_set_num_threads.restype = None
-    lib.flint_set_num_threads(1)
     return lib
 
 
@@ -86,34 +83,49 @@ def recover_flint(residue, modulus, height):
     Base-16 conversion keeps data transfer linear in the binary bit length.
     The result is already reduced; no Python long-integer gcd is introduced.
     """
-    _check(residue, modulus, height)
+    return recover_many_flint((residue,), modulus, height)[0]
+
+
+def recover_many_flint(residues, modulus, height):
+    """Recover a batch with shared bounds and deterministic native cleanup.
+
+    Bounds are converted once per solve. No process-global FLINT thread or
+    precision setting is changed. The numerical reconstruction is unchanged.
+    """
+    _check(0, modulus, height)
     lib = _library()
     values = [ctypes.c_long(0) for _ in range(3)]
-    result = _Fmpq(0, 0)
+    result = _Fmpq(0, 1)
     pointers = [ctypes.pointer(value) for value in values]
     num_ptr = ctypes.cast(ctypes.byref(result), ctypes.POINTER(ctypes.c_long))
     den_ptr = ctypes.cast(ctypes.byref(result, ctypes.sizeof(ctypes.c_long)),
                           ctypes.POINTER(ctypes.c_long))
     try:
-        for pointer, value in zip(pointers, (residue, modulus, height)):
+        for pointer, value in zip(pointers[1:], (modulus, height)):
             if lib.fmpz_set_str(pointer, format(value, "x").encode("ascii"), 16):
                 raise RuntimeError("FLINT rejected a hexadecimal integer")
-        if not lib.fmpq_reconstruct_fmpz_2(ctypes.byref(result), pointers[0],
-                                         pointers[1], pointers[2], pointers[2]):
-            raise ValueError("No bounded reconstruction")
         output = []
-        for pointer in (num_ptr, den_ptr):
-            raw = lib.fmpz_get_str(None, 16, pointer)
-            if not raw:
-                raise MemoryError("FLINT integer conversion failed")
-            try:
-                output.append(int(ctypes.string_at(raw), 16))
-            finally:
-                lib.flint_free(raw)
-        numerator, denominator = output
-        if abs(numerator) > height or not 1 <= denominator <= height or not denominator & 1:
-            raise RuntimeError("FLINT returned an invalid bounded reconstruction")
-        return numerator, denominator
+        for residue in residues:
+            _check(residue, modulus, height)
+            if lib.fmpz_set_str(pointers[0], format(residue, "x").encode("ascii"), 16):
+                raise RuntimeError("FLINT rejected a hexadecimal integer")
+            if not lib.fmpq_reconstruct_fmpz_2(ctypes.byref(result), pointers[0],
+                                             pointers[1], pointers[2], pointers[2]):
+                raise ValueError("No bounded reconstruction")
+            pair = []
+            for pointer in (num_ptr, den_ptr):
+                raw = lib.fmpz_get_str(None, 16, pointer)
+                if not raw:
+                    raise MemoryError("FLINT integer conversion failed")
+                try:
+                    pair.append(int(ctypes.string_at(raw), 16))
+                finally:
+                    lib.flint_free(raw)
+            numerator, denominator = pair
+            if abs(numerator) > height or not 1 <= denominator <= height or not denominator & 1:
+                raise RuntimeError("FLINT returned an invalid bounded reconstruction")
+            output.append((numerator, denominator))
+        return output
     finally:
         for pointer in pointers + [num_ptr, den_ptr]:
             lib.fmpz_clear(pointer)

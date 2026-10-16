@@ -1,3 +1,12 @@
+# 0.2.1 — measured core and delivery improvements
+
+- Reuse native modulus/height conversions within each solve.
+- Release digit buffers during recovery and remove repeated residual scans.
+- Preserve the caller's FLINT thread setting.
+- Add independent batch/cleanup/state tests and paired time/memory profiles.
+- Add installed-wheel CI, citation and contribution metadata.
+- Public signatures, promises and exact rational outputs are preserved.
+
 # Changes
 
 ## 0.2.0 — 15 October 2026
