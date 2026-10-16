@@ -108,7 +108,9 @@ class SolverTests(unittest.TestCase):
         rhs = [Fraction(1, 7), Fraction(-2, 11)]
         result = self.assert_case(matrix, rhs, 3)
         scale, radix = 1 << result.rounding_bits, 1 << result.radix_bits
-        rounding = lambda x: (2*scale*Fraction(x).numerator+Fraction(x).denominator)//(2*Fraction(x).denominator)
+        def rounding(x):
+            x = Fraction(x)
+            return (2 * scale * x.numerator + x.denominator) // (2 * x.denominator)
         working = [[radix*rounding(matrix[i][j])+int(i==j) for j in range(2)] for i in range(2)]
         exact_z = gaussian_reference(working, [rounding(x) for x in rhs])
         self.assertEqual([x.as_fraction() for x in result.x], [radix*x for x in exact_z])

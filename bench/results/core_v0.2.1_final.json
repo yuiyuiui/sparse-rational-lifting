@@ -1,0 +1,219 @@
+{
+  "format_version": 1,
+  "preflight": "ASSESSED_RUN",
+  "evidence": "CLAIM_FACING",
+  "placement": "LOCAL_EXECUTION; one worker and one BLAS/OpenMP thread",
+  "python": "3.13.3",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "dependencies": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "mpmath": "1.3.0",
+    "sympy": "1.14.0",
+    "python-flint": "0.8.0"
+  },
+  "timer": "perf_counter; validation and profiling excluded from timings",
+  "memory": "Fresh-worker absolute peak RSS after timing includes imports, inputs, outputs and validation. Python traced peak is one separate call and excludes untraced native allocations.",
+  "cost": "Setup/import, first call and warm public calls are separated. Internal caches may be reused.",
+  "results": [
+    {
+      "case": "small",
+      "settings": {
+        "n": 8,
+        "nnz": 15,
+        "c": 2,
+        "family": "upper bidiagonal"
+      },
+      "validation": {
+        "passed": true,
+        "exact_squared_error_test": true,
+        "output_sha256": "a816c36bac809ac1c0cb7c0baacba71d0e658d83c7de92858703c4c95c958a1a"
+      },
+      "source_sha256": "0f870dda755d7338ca087021318e54f9734c502d91c7bd2acf28c936c84a0b27",
+      "setup_seconds": 0.003942415933124721,
+      "first_call_seconds": 0.00797533302102238,
+      "warm_seconds": [
+        0.00024312501773238182,
+        0.00022783293388783932,
+        0.00022379099391400814,
+        0.00022749998606741428,
+        0.00023212493397295475,
+        0.00020758307073265314,
+        0.00022941699717193842
+      ],
+      "median_seconds": 0.00022783293388783932,
+      "minimum_seconds": 0.00020758307073265314,
+      "maximum_seconds": 0.00024312501773238182,
+      "python_traced_peak_bytes": 10520,
+      "fresh_worker_peak_rss_bytes": 30801920,
+      "profile": "         2984 function calls (2961 primitive calls) in 0.001 seconds\n\n   Ordered by: cumulative time\n   List reduced from 45 to 14 due to restriction <14>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n        1    0.000    0.000    0.001    0.001 core_cases.py:15(call)\n        1    0.000    0.000    0.001    0.001 solver.py:51(solve)\n  131/108    0.000    0.000    0.000    0.000 {built-in method builtins.max}\n        8    0.000    0.000    0.000    0.000 reconstruct.py:83(recover_flint)\n      450    0.000    0.000    0.000    0.000 solver.py:116(<genexpr>)\n      400    0.000    0.000    0.000    0.000 {method 'extend' of 'bytearray' objects}\n      400    0.000    0.000    0.000    0.000 {method 'to_bytes' of 'int' objects}\n      475    0.000    0.000    0.000    0.000 {method 'bit_length' of 'int' objects}\n      485    0.000    0.000    0.000    0.000 {built-in method builtins.abs}\n       24    0.000    0.000    0.000    0.000 solver.py:86(<genexpr>)\n       25    0.000    0.000    0.000    0.000 fractions.py:203(__new__)\n       23    0.000    0.000    0.000    0.000 solver.py:46(_round_scaled)\n       24    0.000    0.000    0.000    0.000 {built-in method builtins.format}\n       16    0.000    0.000    0.000    0.000 __init__.py:530(cast)\n\n\n",
+      "implementation": "baseline"
+    },
+    {
+      "case": "small",
+      "settings": {
+        "n": 8,
+        "nnz": 15,
+        "c": 2,
+        "family": "upper bidiagonal"
+      },
+      "validation": {
+        "passed": true,
+        "exact_squared_error_test": true,
+        "output_sha256": "a816c36bac809ac1c0cb7c0baacba71d0e658d83c7de92858703c4c95c958a1a"
+      },
+      "source_sha256": "84e0d702c3677c61ae29f9631a4fa5114faea995c3862875f362814ddfc1280f",
+      "setup_seconds": 0.004270124947652221,
+      "first_call_seconds": 0.008302917005494237,
+      "warm_seconds": [
+        0.00019562500528991222,
+        0.0001807080116122961,
+        0.00017349992413073778,
+        0.00017195800319314003,
+        0.00017066707368940115,
+        0.00016941700596362352,
+        0.00016916601452976465
+      ],
+      "median_seconds": 0.00017195800319314003,
+      "minimum_seconds": 0.00016916601452976465,
+      "maximum_seconds": 0.00019562500528991222,
+      "python_traced_peak_bytes": 9076,
+      "fresh_worker_peak_rss_bytes": 30621696,
+      "profile": "         2357 function calls (2334 primitive calls) in 0.001 seconds\n\n   Ordered by: cumulative time\n   List reduced from 47 to 14 due to restriction <14>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n        1    0.000    0.000    0.001    0.001 core_cases.py:15(call)\n        1    0.000    0.000    0.001    0.001 solver.py:52(solve)\n        1    0.000    0.000    0.000    0.000 reconstruct.py:89(recover_many_flint)\n     30/7    0.000    0.000    0.000    0.000 {built-in method builtins.max}\n      477    0.000    0.000    0.000    0.000 {method 'bit_length' of 'int' objects}\n      400    0.000    0.000    0.000    0.000 {method 'extend' of 'bytearray' objects}\n      400    0.000    0.000    0.000    0.000 {method 'to_bytes' of 'int' objects}\n      485    0.000    0.000    0.000    0.000 {built-in method builtins.abs}\n       24    0.000    0.000    0.000    0.000 solver.py:87(<genexpr>)\n       25    0.000    0.000    0.000    0.000 fractions.py:203(__new__)\n       23    0.000    0.000    0.000    0.000 solver.py:47(_round_scaled)\n        1    0.000    0.000    0.000    0.000 parameters.py:64(select_contract)\n        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}\n        9    0.000    0.000    0.000    0.000 solver.py:69(<genexpr>)\n\n\n",
+      "implementation": "candidate"
+    },
+    {
+      "case": "medium",
+      "settings": {
+        "n": 64,
+        "nnz": 127,
+        "c": 2,
+        "family": "upper bidiagonal"
+      },
+      "validation": {
+        "passed": true,
+        "exact_squared_error_test": true,
+        "output_sha256": "acae6bd99a3d1e01a39f51fcd9060c3f198a5611a55f23998c44ec0aee11806f"
+      },
+      "source_sha256": "84e0d702c3677c61ae29f9631a4fa5114faea995c3862875f362814ddfc1280f",
+      "setup_seconds": 0.004180166986770928,
+      "first_call_seconds": 0.019004249945282936,
+      "warm_seconds": [
+        0.011110291932709515,
+        0.010581957991234958,
+        0.010942458058707416,
+        0.011022666934877634,
+        0.011009874986484647,
+        0.011006666929461062,
+        0.01070300000719726
+      ],
+      "median_seconds": 0.011006666929461062,
+      "minimum_seconds": 0.010581957991234958,
+      "maximum_seconds": 0.011110291932709515,
+      "python_traced_peak_bytes": 230572,
+      "fresh_worker_peak_rss_bytes": 32292864,
+      "profile": "         104613 function calls (104422 primitive calls) in 0.023 seconds\n\n   Ordered by: cumulative time\n   List reduced from 47 to 14 due to restriction <14>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n        1    0.000    0.000    0.023    0.023 core_cases.py:15(call)\n        1    0.012    0.012    0.023    0.023 solver.py:52(solve)\n        1    0.004    0.004    0.005    0.005 reconstruct.py:89(recover_many_flint)\n    24704    0.002    0.000    0.002    0.000 {method 'to_bytes' of 'int' objects}\n    24704    0.002    0.000    0.002    0.000 {method 'extend' of 'bytearray' objects}\n    25285    0.001    0.000    0.001    0.000 {method 'bit_length' of 'int' objects}\n    25405    0.001    0.000    0.001    0.000 {built-in method builtins.abs}\n    198/7    0.000    0.000    0.000    0.000 {built-in method builtins.max}\n       66    0.000    0.000    0.000    0.000 {built-in method builtins.format}\n       65    0.000    0.000    0.000    0.000 solver.py:134(<genexpr>)\n      192    0.000    0.000    0.000    0.000 solver.py:87(<genexpr>)\n       64    0.000    0.000    0.000    0.000 {built-in method from_bytes}\n       65    0.000    0.000    0.000    0.000 reconstruct.py:14(_check)\n      193    0.000    0.000    0.000    0.000 fractions.py:203(__new__)\n\n\n",
+      "implementation": "candidate"
+    },
+    {
+      "case": "medium",
+      "settings": {
+        "n": 64,
+        "nnz": 127,
+        "c": 2,
+        "family": "upper bidiagonal"
+      },
+      "validation": {
+        "passed": true,
+        "exact_squared_error_test": true,
+        "output_sha256": "acae6bd99a3d1e01a39f51fcd9060c3f198a5611a55f23998c44ec0aee11806f"
+      },
+      "source_sha256": "0f870dda755d7338ca087021318e54f9734c502d91c7bd2acf28c936c84a0b27",
+      "setup_seconds": 0.004110540961846709,
+      "first_call_seconds": 0.020366167067550123,
+      "warm_seconds": [
+        0.012449541944079101,
+        0.012441041064448655,
+        0.01172391592990607,
+        0.012141500017605722,
+        0.012198832933790982,
+        0.012207958963699639,
+        0.012193207978270948
+      ],
+      "median_seconds": 0.012198832933790982,
+      "minimum_seconds": 0.01172391592990607,
+      "maximum_seconds": 0.012449541944079101,
+      "python_traced_peak_bytes": 300136,
+      "fresh_worker_peak_rss_bytes": 32030720,
+      "profile": "         131224 function calls (131033 primitive calls) in 0.025 seconds\n\n   Ordered by: cumulative time\n   List reduced from 45 to 14 due to restriction <14>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n        1    0.000    0.000    0.025    0.025 core_cases.py:15(call)\n        1    0.009    0.009    0.025    0.025 solver.py:51(solve)\n  971/780    0.001    0.000    0.007    0.000 {built-in method builtins.max}\n       64    0.005    0.000    0.006    0.000 reconstruct.py:83(recover_flint)\n    25090    0.003    0.000    0.005    0.000 solver.py:116(<genexpr>)\n    24704    0.002    0.000    0.002    0.000 {method 'to_bytes' of 'int' objects}\n    24704    0.002    0.000    0.002    0.000 {method 'extend' of 'bytearray' objects}\n    25283    0.001    0.000    0.001    0.000 {method 'bit_length' of 'int' objects}\n    25405    0.001    0.000    0.001    0.000 {built-in method builtins.abs}\n      192    0.001    0.000    0.001    0.000 {built-in method builtins.format}\n       64    0.000    0.000    0.000    0.000 {built-in method from_bytes}\n      192    0.000    0.000    0.000    0.000 solver.py:86(<genexpr>)\n       64    0.000    0.000    0.000    0.000 reconstruct.py:14(_check)\n      193    0.000    0.000    0.000    0.000 fractions.py:203(__new__)\n\n\n",
+      "implementation": "baseline"
+    },
+    {
+      "case": "large",
+      "settings": {
+        "n": 128,
+        "nnz": 255,
+        "c": 2,
+        "family": "upper bidiagonal"
+      },
+      "validation": {
+        "passed": true,
+        "exact_squared_error_test": true,
+        "output_sha256": "7583ca0c77ad0dae46ed0f749c611c384397dcf87f6fd97b8f81888f72a21ae9"
+      },
+      "source_sha256": "0f870dda755d7338ca087021318e54f9734c502d91c7bd2acf28c936c84a0b27",
+      "setup_seconds": 0.00485091598238796,
+      "first_call_seconds": 0.06856050004716963,
+      "warm_seconds": [
+        0.05929712497163564,
+        0.06548804207704961,
+        0.0645855829352513,
+        0.06528012501075864,
+        0.06291808397509158,
+        0.06522658397443593,
+        0.06391141598578542
+      ],
+      "median_seconds": 0.0645855829352513,
+      "minimum_seconds": 0.05929712497163564,
+      "maximum_seconds": 0.06548804207704961,
+      "python_traced_peak_bytes": 1228048,
+      "fresh_worker_peak_rss_bytes": 39272448,
+      "profile": "         508184 function calls (507801 primitive calls) in 0.106 seconds\n\n   Ordered by: cumulative time\n   List reduced from 45 to 14 due to restriction <14>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n        1    0.000    0.000    0.106    0.106 core_cases.py:15(call)\n        1    0.034    0.034    0.106    0.106 solver.py:51(solve)\n      128    0.030    0.000    0.033    0.000 reconstruct.py:83(recover_flint)\n1931/1548    0.005    0.000    0.026    0.000 {built-in method builtins.max}\n    99330    0.013    0.000    0.021    0.000 solver.py:116(<genexpr>)\n    98560    0.006    0.000    0.006    0.000 {method 'to_bytes' of 'int' objects}\n    98560    0.006    0.000    0.006    0.000 {method 'extend' of 'bytearray' objects}\n    99715    0.004    0.000    0.004    0.000 {method 'bit_length' of 'int' objects}\n    99965    0.004    0.000    0.004    0.000 {built-in method builtins.abs}\n      384    0.002    0.000    0.002    0.000 {built-in method builtins.format}\n      128    0.001    0.000    0.001    0.000 {built-in method from_bytes}\n      128    0.000    0.000    0.000    0.000 reconstruct.py:14(_check)\n      384    0.000    0.000    0.000    0.000 solver.py:86(<genexpr>)\n      385    0.000    0.000    0.000    0.000 fractions.py:203(__new__)\n\n\n",
+      "implementation": "baseline"
+    },
+    {
+      "case": "large",
+      "settings": {
+        "n": 128,
+        "nnz": 255,
+        "c": 2,
+        "family": "upper bidiagonal"
+      },
+      "validation": {
+        "passed": true,
+        "exact_squared_error_test": true,
+        "output_sha256": "7583ca0c77ad0dae46ed0f749c611c384397dcf87f6fd97b8f81888f72a21ae9"
+      },
+      "source_sha256": "84e0d702c3677c61ae29f9631a4fa5114faea995c3862875f362814ddfc1280f",
+      "setup_seconds": 0.0042476250091567636,
+      "first_call_seconds": 0.06294500001240522,
+      "warm_seconds": [
+        0.0555132090812549,
+        0.05522179196123034,
+        0.05528295901603997,
+        0.0551792080514133,
+        0.054871207918040454,
+        0.054739040904678404,
+        0.055547166033647954
+      ],
+      "median_seconds": 0.05522179196123034,
+      "minimum_seconds": 0.054739040904678404,
+      "maximum_seconds": 0.055547166033647954,
+      "python_traced_peak_bytes": 940632,
+      "fresh_worker_peak_rss_bytes": 38928384,
+      "profile": "         405797 function calls (405414 primitive calls) in 0.102 seconds\n\n   Ordered by: cumulative time\n   List reduced from 47 to 14 due to restriction <14>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n        1    0.000    0.000    0.102    0.102 core_cases.py:15(call)\n        1    0.048    0.048    0.102    0.102 solver.py:52(solve)\n        1    0.027    0.027    0.030    0.030 reconstruct.py:89(recover_many_flint)\n    98560    0.007    0.000    0.007    0.000 {method 'to_bytes' of 'int' objects}\n    98560    0.006    0.000    0.006    0.000 {method 'extend' of 'bytearray' objects}\n    99717    0.006    0.000    0.006    0.000 {method 'bit_length' of 'int' objects}\n    99965    0.005    0.000    0.005    0.000 {built-in method builtins.abs}\n      130    0.001    0.000    0.001    0.000 {built-in method builtins.format}\n      129    0.000    0.000    0.001    0.000 solver.py:134(<genexpr>)\n      128    0.001    0.000    0.001    0.000 {built-in method from_bytes}\n      129    0.000    0.000    0.000    0.000 reconstruct.py:14(_check)\n    390/7    0.000    0.000    0.000    0.000 {built-in method builtins.max}\n      384    0.000    0.000    0.000    0.000 solver.py:87(<genexpr>)\n      385    0.000    0.000    0.000    0.000 fractions.py:203(__new__)\n\n\n",
+      "implementation": "candidate"
+    }
+  ]
+}

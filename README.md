@@ -128,6 +128,12 @@ small validated source data are public.
 
 ## Tests, benchmarks and reproduction
 
+Version 0.2.1 reuses native reconstruction bounds across a solve and releases
+consumed digit buffers. The numerical contract and exact rational output are
+unchanged. It also preserves the caller's process-global FLINT thread setting.
+See the [profile-driven optimization and memory report](bench/README.md) for
+matched before/after samples, independent checks and reproduction commands.
+
 ```sh
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m unittest discover -s test -v
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python numerical_case/benchmark_policies.py --output numerical_case/raw/policies-reproduction
@@ -169,8 +175,8 @@ Earlier cited revisions remain available.
 The default calls FLINT 3.3.1's
 [bounded reconstruction](https://github.com/flintlib/flint/blob/v3.3.1/src/fmpq/reconstruct_fmpz_2.c)
 and its [recursive half-GCD helpers](https://github.com/flintlib/flint/blob/v3.3.1/src/fmpq/get_cfrac_helpers.c).
-Native initialization sets one FLINT thread; concurrent manipulation of that
-process-global setting by another client is not validated. Very large inputs,
+The package does not change process-global FLINT thread settings. Set thread
+limits explicitly when reproducing benchmarks. Very large inputs,
 condition promises or accuracy requests can consume substantial resources;
 no implicit truncation or reduced-precision mode is used. No third-party
 source or binaries are vendored.

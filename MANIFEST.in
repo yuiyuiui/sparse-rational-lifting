@@ -1,0 +1,7 @@
+include README.md LICENSE CITATION.cff CONTRIBUTING.md
+recursive-include docs *.md
+recursive-include bench *.py *.md *.json
+recursive-include test *.py
+recursive-include numerical_case *.py *.md *.json *.svg
+prune numerical_case/raw
+global-exclude __pycache__ *.py[cod]
